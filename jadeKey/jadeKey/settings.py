@@ -32,6 +32,7 @@ ALLOWED_HOSTS = ['127.0.0.1', 'localhost', 'testserver']
 
 INSTALLED_APPS = [
     'polls.apps.PollsConfig',
+    'jadeK.apps.JadekConfig',
     'django.contrib.admin',
     'django.contrib.auth',
     'django.contrib.contenttypes',

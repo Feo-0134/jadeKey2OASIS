@@ -1,0 +1,9 @@
+{% if latest_process_list %}
+    <ul>
+    {% for process in latest_process_list %}
+        <li>{{ process.PROCESS_TITLE }} {{ process.engineer }}</li>
+    {% endfor %}
+    </ul>
+{% else %}
+    <p>No process are available.</p>
+{% endif %}
