@@ -1,7 +1,7 @@
 {% if latest_process_list %}
     <ul>
     {% for process in latest_process_list %}
-        <li>{{ process.PROCESS_TITLE }} {{ process.engineer }}</li>
+        <li><a href="{% url 'jadeK:process' process.id %}">{{ process.title }} {{ process.engineer }}</a></li>
     {% endfor %}
     </ul>
 {% else %}

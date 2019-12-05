@@ -8,11 +8,9 @@ class Engineer(models.Model):
         ('SEE', 'Support Escalation Engineer'),
         ('EE', 'Escalation Engineer'),
     ]
+    
     name = models.CharField(max_length=20)
-    # current title
     title = models.CharField(max_length=3, choices=ENGINEER_TITLE)
-    # engineer is currently under going a escalation process
-    in_a_process = models.BooleanField(default = False)
     
     def __str__(self):
         return self.name
@@ -23,19 +21,22 @@ class Process(models.Model):
         ('E1', 'Escalation to SEE'),
         ('E2', 'Escalation to EE'),
     ]
-    CURRENT_STAGE = [
-        ('S1', 'Stage1'),
-        ('S2', 'Stage2'),
-        ('S3', 'Stage3'),
-        ('S4', 'Stage4'),
-        ('S5', 'Stage5'),
+    STATUS = [
+        ('alive', 'In Process'),
+        ('pass', 'Pass'),
+        ('no_pass', 'No Pass')
     ]
+
     title = models.CharField(max_length=3, choices=PROCESS_TITLE)
+    created = models.DateTimeField(auto_now_add=True)
     engineer = models.ForeignKey(Engineer, on_delete=models.CASCADE)
-    # start_date = models.DateTimeField('date started')
-    current_stage = models.CharField(max_length=3, choices=CURRENT_STAGE)
+    status = models.CharField(max_length=7, choices=STATUS)
+    
     def __str__(self):
-        return self.current_stage + ': ' + self.engineer.name
+        return self.title + ': ' + self.engineer.name
+
+    class Meta:
+        ordering = ['created']
 
 
 class Stage(models.Model):
@@ -51,12 +52,16 @@ class Stage(models.Model):
         ('pass', 'Pass'),
         ('no_pass', 'No Pass')
     ]
-    title = models.CharField(max_length=3, choices=STAGE_TITLE )
+    
+    title = models.CharField(max_length=3, choices=STAGE_TITLE)
+    created = models.DateTimeField(auto_now_add=True)
     process = models.ForeignKey(Process, on_delete=models.CASCADE)
-    # start_date = models.DateTimeField('date started')
     status = models.CharField(max_length=7, choices=STATUS)
+
     def __str__(self):
         return self.title
+    class Meta:
+        ordering = ['created']
 
 
 class Comment(models.Model):
@@ -65,11 +70,16 @@ class Comment(models.Model):
         ('pass', 'Pass'),
         ('no_pass', 'No Pass')
     ]
+    
     stage = models.ForeignKey(Stage, on_delete=models.CASCADE)
-    author = models.ForeignKey(Engineer, on_delete=models.DO_NOTHING)    
+    created = models.DateTimeField(auto_now_add=True)
+    author = models.ForeignKey(Engineer, on_delete=models.CASCADE)
+    result = models.CharField(max_length=7, choices=RESULT)  
     comment_text = models.CharField(max_length=1000)
-    # start_date = models.DateTimeField('date started')
-    result = models.CharField(max_length=7, choices=RESULT)
+
+    
     def __str__(self):
         return self.author.name
+    class Meta:
+        ordering = ['created']
 

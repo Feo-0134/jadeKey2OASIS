@@ -1,0 +1,11 @@
+<h1>{{ stage.title }}</h1>
+
+{% if error_message %}<p><strong>{{ error_message }}</strong></p>{% endif %}
+
+    <ul>
+        {% for comment in stage.comment_set.all %}
+        <li>
+            <h3>{{ comment.comment_text }} - {{ comment.author.name }} - {{ comment.result }}</h3>
+        </li>
+        {% endfor %}
+    </ul>

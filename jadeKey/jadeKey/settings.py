@@ -31,8 +31,11 @@ ALLOWED_HOSTS = ['127.0.0.1', 'localhost', 'testserver']
 # Application definition
 
 INSTALLED_APPS = [
+    'rest_framework',
+    'escapp.apps.EscappConfig',
     'polls.apps.PollsConfig',
     'jadeK.apps.JadekConfig',
+    'snippets.apps.SnippetsConfig',
     'django.contrib.admin',
     'django.contrib.auth',
     'django.contrib.contenttypes',
@@ -50,6 +53,11 @@ MIDDLEWARE = [
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
 ]
+
+REST_FRAMEWORK = {
+    'DEFAULT_PAGINATION_CLASS': 'rest_framework.pagination.PageNumberPagination',
+    'PAGE_SIZE': 10
+}
 
 ROOT_URLCONF = 'jadeKey.urls'
 
