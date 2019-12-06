@@ -32,6 +32,9 @@ class Process(models.Model):
     engineer = models.ForeignKey(Engineer, on_delete=models.CASCADE)
     status = models.CharField(max_length=7, choices=STATUS)
     
+    # def process_started(self):
+    #     return self.stage_set
+
     def __str__(self):
         return self.title + ': ' + self.engineer.name
 
