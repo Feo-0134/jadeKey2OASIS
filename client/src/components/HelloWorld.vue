@@ -1,144 +1,249 @@
 <template>
-  <v-container>
-    <v-layout
-      text-center
-      wrap
+  <v-app id="inspire">
+    <v-navigation-drawer
+      v-model="drawer"
+      app
+      clipped
     >
-      <v-flex xs12>
-        <v-img
-          :src="require('../assets/logo.svg')"
-          class="my-3"
-          contain
-          height="200"
-        ></v-img>
-      </v-flex>
+      <v-list dense>
+        <v-list-item link>
+          <v-list-item-action>
+            <v-icon>mdi-view-dashboard</v-icon>
+          </v-list-item-action>
+          <v-list-item-content>
+            <v-list-item-title>Dashboard</v-list-item-title>
+          </v-list-item-content>
+        </v-list-item>
+        <v-list-item link>
+          <v-list-item-action>
+            <v-icon>mdi-settings</v-icon>
+          </v-list-item-action>
+          <v-list-item-content>
+            <v-list-item-title>Settings</v-list-item-title>
+          </v-list-item-content>
+        </v-list-item>
+      </v-list>
+    </v-navigation-drawer>
 
-      <v-flex mb-4>
-        <h1 class="display-2 font-weight-bold mb-3">
-          Welcome to Vuetify
-        </h1>
-        <p class="subheading font-weight-regular">
-          For help and collaboration with other Vuetify developers,
-          <br>please join our online
-          <a href="https://community.vuetifyjs.com" target="_blank">Discord Community</a>
-        </p>
-      </v-flex>
+    <v-app-bar
+      app
+      clipped-left
+    >
+      <v-app-bar-nav-icon @click.stop="drawer = !drawer" />
+      <v-toolbar-title>Jade_Key</v-toolbar-title>
+    </v-app-bar>
 
-      <v-flex
-        mb-5
-        xs12
+    <v-content>
+      <v-container
+        class="fill-height"
+        fluid
       >
-        <h2 class="headline font-weight-bold mb-3">What's next?</h2>
+        <v-row
+          justify="center"
+        >
 
-        <v-layout justify-center>
-          <a
-            v-for="(next, i) in whatsNext"
-            :key="i"
-            :href="next.href"
-            class="subheading mx-3"
-            target="_blank"
-          >
-            {{ next.text }}
-          </a>
-        </v-layout>
-      </v-flex>
+          <v-stepper v-model="e1">
 
-      <v-flex
-        xs12
-        mb-5
-      >
-        <h2 class="headline font-weight-bold mb-3">Important Links</h2>
+              <v-stepper-header>
+              <v-avatar color="indigo" size="48" style="margin:auto">
+                <span class="white--text headline">GM</span>
+              </v-avatar>
+                <v-stepper-step :complete="e1 > 1" step="1">Step 1</v-stepper-step>
 
-        <v-layout justify-center>
-          <a
-            v-for="(link, i) in importantLinks"
-            :key="i"
-            :href="link.href"
-            class="subheading mx-3"
-            target="_blank"
-          >
-            {{ link.text }}
-          </a>
-        </v-layout>
-      </v-flex>
+                <v-divider></v-divider>
 
-      <v-flex
-        xs12
-        mb-5
-      >
-        <h2 class="headline font-weight-bold mb-3">Ecosystem</h2>
+                <v-stepper-step :complete="e1 > 2" step="2">Step 2</v-stepper-step>
 
-        <v-layout justify-center>
-          <a
-            v-for="(eco, i) in ecosystem"
-            :key="i"
-            :href="eco.href"
-            class="subheading mx-3"
-            target="_blank"
-          >
-            {{ eco.text }}
-          </a>
-        </v-layout>
-      </v-flex>
-    </v-layout>
-  </v-container>
+                <v-divider></v-divider>
+
+                <v-stepper-step :complete="e1 > 3" step="3">Step 3</v-stepper-step>
+
+                <v-divider></v-divider>
+
+                <v-stepper-step  step="4">Step 4</v-stepper-step>
+                
+                <v-icon @click='detailShow=!detailShow'>mdi-chevron-down</v-icon>
+              </v-stepper-header>
+
+              <v-stepper-items v-show="detailShow">
+                <v-stepper-content step="1">
+                  <v-card
+                    class="mb-12"
+                    color="grey lighten-1"
+                    height="200px"
+                  ></v-card>
+
+                  <v-btn color="primary"
+                    @click="e1 = 2"
+                  >
+                    Continue
+                  </v-btn>
+
+                  <v-btn text>Cancel</v-btn>
+                </v-stepper-content>
+
+                <v-stepper-content step="2">
+                  <v-card
+                    class="mb-12"
+                    color="grey lighten-1"
+                    height="200px"
+                  ></v-card>
+
+                  <v-btn
+                    color="primary"
+                    @click="e1 = 3"
+                  >
+                    Continue
+                  </v-btn>
+
+                  <v-btn text>Cancel</v-btn>
+                </v-stepper-content>
+
+                <v-stepper-content step="3">
+                  <v-card
+                    class="mb-12"
+                    color="grey lighten-1"
+                    height="200px"
+                  ></v-card>
+
+                  <v-btn
+                    color="primary"
+                    @click="e1 = 4"
+                  >
+                    Continue
+                  </v-btn>
+
+                  <v-btn text>Cancel</v-btn>
+                </v-stepper-content>
+                <v-stepper-content step="4">
+                  <v-card
+                    class="mb-12"
+                    color="grey lighten-1"
+                    height="200px"
+                  ></v-card>
+
+                  <v-btn
+                    color="primary"
+                    @click="e1 = 1"
+                  >
+                    Continue
+                  </v-btn>
+
+                  <v-btn text>Cancel</v-btn>
+                </v-stepper-content>
+              </v-stepper-items>
+          </v-stepper>
+          <!-- <v-stepper v-model="e2">
+              <v-stepper-header>
+                <v-stepper-step :complete="e1 > 1" step="1">Step 1</v-stepper-step>
+
+                <v-divider></v-divider>
+
+                <v-stepper-step :complete="e1 > 2" step="2">Step 2</v-stepper-step>
+
+                <v-divider></v-divider>
+
+                <v-stepper-step :complete="e1 > 3" step="3">Step 3</v-stepper-step>
+
+                <v-divider></v-divider>
+
+                <v-stepper-step  step="4">Step 4</v-stepper-step>
+                
+                <v-icon @click='detailShow=!detailShow'>mdi-chevron-down</v-icon>
+              </v-stepper-header>
+
+              <v-stepper-items v-show="detailShow">
+                <v-stepper-content step="1">
+                  <v-card
+                    class="mb-12"
+                    color="grey lighten-1"
+                    height="200px"
+                  ></v-card>
+
+                  <v-btn color="primary"
+                    @click="e1 = 2"
+                  >
+                    Continue
+                  </v-btn>
+
+                  <v-btn text>Cancel</v-btn>
+                </v-stepper-content>
+
+                <v-stepper-content step="2">
+                  <v-card
+                    class="mb-12"
+                    color="grey lighten-1"
+                    height="200px"
+                  ></v-card>
+
+                  <v-btn
+                    color="primary"
+                    @click="e1 = 3"
+                  >
+                    Continue
+                  </v-btn>
+
+                  <v-btn text>Cancel</v-btn>
+                </v-stepper-content>
+
+                <v-stepper-content step="3">
+                  <v-card
+                    class="mb-12"
+                    color="grey lighten-1"
+                    height="200px"
+                  ></v-card>
+
+                  <v-btn
+                    color="primary"
+                    @click="e1 = 4"
+                  >
+                    Continue
+                  </v-btn>
+
+                  <v-btn text>Cancel</v-btn>
+                </v-stepper-content>
+                <v-stepper-content step="4">
+                  <v-card
+                    class="mb-12"
+                    color="grey lighten-1"
+                    height="200px"
+                  ></v-card>
+
+                  <v-btn
+                    color="primary"
+                    @click="e1 = 1"
+                  >
+                    Continue
+                  </v-btn>
+
+                  <v-btn text>Cancel</v-btn>
+                </v-stepper-content>
+              </v-stepper-items>
+          </v-stepper> -->
+      
+        </v-row>
+      
+      </v-container>
+    </v-content>
+
+    <v-footer app>
+      <span>&copy; 2019</span>
+    </v-footer>
+  </v-app>
 </template>
 
 <script>
-export default {
-  name: 'HelloWorld',
-
-  data: () => ({
-    ecosystem: [
-      {
-        text: 'vuetify-loader',
-        href: 'https://github.com/vuetifyjs/vuetify-loader',
-      },
-      {
-        text: 'github',
-        href: 'https://github.com/vuetifyjs/vuetify',
-      },
-      {
-        text: 'awesome-vuetify',
-        href: 'https://github.com/vuetifyjs/awesome-vuetify',
-      },
-    ],
-    importantLinks: [
-      {
-        text: 'Documentation',
-        href: 'https://vuetifyjs.com',
-      },
-      {
-        text: 'Chat',
-        href: 'https://community.vuetifyjs.com',
-      },
-      {
-        text: 'Made with Vuetify',
-        href: 'https://madewithvuejs.com/vuetify',
-      },
-      {
-        text: 'Twitter',
-        href: 'https://twitter.com/vuetifyjs',
-      },
-      {
-        text: 'Articles',
-        href: 'https://medium.com/vuetify',
-      },
-    ],
-    whatsNext: [
-      {
-        text: 'Explore components',
-        href: 'https://vuetifyjs.com/components/api-explorer',
-      },
-      {
-        text: 'Select a layout',
-        href: 'https://vuetifyjs.com/layout/pre-defined',
-      },
-      {
-        text: 'Frequently Asked Questions',
-        href: 'https://vuetifyjs.com/getting-started/frequently-asked-questions',
-      },
-    ],
-  }),
-};
+  export default {
+    props: {
+      source: String,
+    },
+    data: () => ({
+      drawer: null,
+      e1: 1,
+      detailShow: false,
+    }),
+    created () {
+      this.$vuetify.theme.dark = true
+    },
+  }
 </script>
