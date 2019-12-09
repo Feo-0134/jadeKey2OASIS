@@ -3,7 +3,6 @@ from escapp.models import *
 from escapp.serializers import *
 
 from rest_framework import generics
-
 from rest_framework.decorators import api_view
 from rest_framework.decorators import action
 from rest_framework.response import Response
