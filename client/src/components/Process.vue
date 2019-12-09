@@ -1,7 +1,7 @@
 <template>
     <div>
+                <p>{{engineer_list}}</p>
     <v-toolbar>
-
       <template v-if="$vuetify.breakpoint.smAndUp">
         <v-avatar color="indigo" size="36" style="margin:auto">
             <span class="white--text headline">{{process.engineer}}</span>
@@ -127,5 +127,18 @@
             e1: 1,
             detailShow: false,
         }),
+        asyncComputed: {
+            engineer_list: {
+                async get() {
+                    try {
+                        const res = await this.$http.get(`http://127.0.0.1:8000/escapp/engineer`);
+                        // console.log(res)
+                        return res.data
+                    }catch(e) {
+                        // console.log(e);
+                    }
+                }   
+            }
+        }
     }
 </script>
