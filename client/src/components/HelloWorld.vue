@@ -41,7 +41,7 @@
         <v-row
           justify="center"
         >
-        <!-- <p>{{process_list}}</p> -->
+        <p>{{process_list}}</p>
 
         <Process v-for="(p, index) in process_list.results" :key="p._id"
         :pindex="index" :process="p" style="width: 85%"

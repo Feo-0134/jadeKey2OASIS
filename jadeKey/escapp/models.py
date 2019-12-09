@@ -39,7 +39,7 @@ class Process(models.Model):
         return self.title + ': ' + self.engineer.name
 
     class Meta:
-        ordering = ['created']
+        ordering = ['engineer']
 
 
 class Stage(models.Model):
