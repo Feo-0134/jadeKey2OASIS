@@ -1,12 +1,35 @@
 <template>
+    <div>
+    <v-toolbar>
+
+      <template v-if="$vuetify.breakpoint.smAndUp">
+        <v-avatar color="indigo" size="36" style="margin:auto">
+            <span class="white--text headline">{{process.engineer}}</span>
+        </v-avatar>
+        
+      </template>
+      
+      <v-toolbar-title>
+        <p style="margin:auto">
+            {{process.title}} - {{process.status}}
+        </p>
+      </v-toolbar-title>
+
+      <v-spacer></v-spacer>
+
+      
+
+      <v-toolbar-items>
+        
+        <v-btn icon>
+          <v-icon @click='detailShow=!detailShow'>mdi-chevron-down</v-icon>
+        </v-btn>
+      </v-toolbar-items>
+
+
+    </v-toolbar>
     <v-stepper v-model="e1">
         <v-stepper-header>
-        <v-avatar color="indigo" size="48" style="margin:auto">
-        <span class="white--text headline">{{process.pk}}</span>
-        </v-avatar>
-        <p style="margin:auto">{{process.fields.title}}</p>
-        <p style="margin:auto">-</p>
-        <p style="margin:auto">{{process.fields.status}}</p>
         <v-stepper-step :complete="e1 > 1" step="1">Step 1</v-stepper-step>
 
         <v-divider></v-divider>
@@ -21,7 +44,7 @@
 
         <v-stepper-step  step="4">Step 4</v-stepper-step>
         
-        <v-icon @click='detailShow=!detailShow'>mdi-chevron-down</v-icon>
+        
         </v-stepper-header>
 
         <v-stepper-items v-show="detailShow">
@@ -92,6 +115,7 @@
         </v-stepper-content>
         </v-stepper-items>
     </v-stepper>
+    </div>
 </template>
 
 <script>

@@ -30,7 +30,7 @@
       clipped-left
     >
       <v-app-bar-nav-icon @click.stop="drawer = !drawer" />
-      <v-toolbar-title>Jade_Key</v-toolbar-title>
+      <v-toolbar-title>Escalation Reviewer</v-toolbar-title>
     </v-app-bar>
 
     <v-content>
@@ -42,9 +42,11 @@
           justify="center"
         >
         <!-- <p>{{process_list}}</p> -->
-        <Process v-for="(p, index) in process_list" :key="p._id"
-        :pindex="index" :process="p"
-        > </Process>
+
+        <Process v-for="(p, index) in process_list.results" :key="p._id"
+        :pindex="index" :process="p" style="width: 85%"
+        >
+        </Process>
         </v-row>
       
       </v-container>
@@ -73,7 +75,7 @@
       process_list: {
         async get() {
           try {
-            const res = await this.$http.get(`http://127.0.0.1:8000/escapp/engineer/${this.user}/process_list`);
+            const res = await this.$http.get(`http://127.0.0.1:8000/escapp/process`);
             // console.log(res)
             return res.data
           }catch(e) {
