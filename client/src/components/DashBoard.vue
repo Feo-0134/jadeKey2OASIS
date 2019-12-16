@@ -41,7 +41,7 @@
         <v-row
           justify="center"
         >
-        <p>{{process_list}}</p>
+        <!-- <p>{{process_list}}</p> -->
 
         <Process v-for="(p, index) in process_list.results" :key="p._id"
         :pindex="index" :process="p" style="width: 85%"
@@ -76,7 +76,6 @@
         async get() {
           try {
             const res = await this.$http.get(`http://127.0.0.1:8000/escapp/process`);
-            // console.log(res)
             return res.data
           }catch(e) {
             // console.log(e);

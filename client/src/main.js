@@ -4,7 +4,9 @@ import Axios from 'axios'
 import vuetify from './plugins/vuetify';
 import AsyncComputed from 'vue-async-computed'
 
-Vue.use(AsyncComputed);
+Vue.use(AsyncComputed, {
+  default: 'Loading...'
+});
 
 Vue.config.productionTip = false
 Vue.prototype.$http = Axios;
