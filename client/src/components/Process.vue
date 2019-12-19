@@ -1,6 +1,6 @@
 <template>
     <div>
-        <p>{{stage_list}}</p> 
+        <!-- <p>{{stage_list}}</p>  -->
         <!-- <p>{{comment_list}}</p> -->
         <v-toolbar>
             <template v-if="$vuetify.breakpoint.smAndUp">
@@ -17,8 +17,8 @@
             <v-spacer></v-spacer>
 
             <v-toolbar-items>
-                <v-btn icon>
-                    <v-icon @click='showMore()'>mdi-chevron-down</v-icon>
+                <v-btn icon @click="showMore()"> 
+                    <v-icon >mdi-chevron-down</v-icon>
                 </v-btn>
             </v-toolbar-items>
         </v-toolbar>
@@ -41,18 +41,19 @@
             
             </v-stepper-header>
 
-            <v-stepper-items v-if="detailShow">
+            <v-stepper-items v-show="detailShow == true">
                 <v-stepper-content step="1">
                     <v-card
                     class="mb-12"
                     color="grey lighten-1"
                     height="200px"
                     >
-                    <!--<Comment 
-                    v-for="(p, index) in comment_list.result" 
-                    :key="p._id" :pindex="index" :process="p"
-                    />--> 
-                    <!-- <p>{{comment_list}}</p> -->
+                        <p v-for="(p,index) in stage_list" 
+                        v-show = "p.fields.title == 'S' + stage"
+                        :key="p._id"
+                        :pindex="index">
+                            {{p.fields.created}}; {{p.fields.status}}
+                        </p> 
                     </v-card>
 
                     <v-btn color="primary"
@@ -61,7 +62,7 @@
                     Continue
                     </v-btn>
 
-                    <v-btn text>Cancel</v-btn>
+                    <v-btn text @click="showDetailComment()">ReadMore</v-btn>
                 </v-stepper-content>
 
                 <v-stepper-content step="2">
@@ -70,10 +71,12 @@
                     color="grey lighten-1"
                     height="200px"
                     >
-                    <!--<Comment 
-                    v-for="(p, index) in comment_list.result" 
-                    :key="p._id" :pindex="index" :process="p"
-                    />-->
+                        <p v-for="(p,index) in stage_list" 
+                        v-show = "p.fields.title == 'S' + stage"
+                        :key="p._id"
+                        :pindex="index">
+                            {{p.fields.created}}; {{p.fields.status}}
+                        </p> 
                     </v-card>
 
                     <v-btn
@@ -83,7 +86,7 @@
                     Continue
                     </v-btn>
 
-                    <v-btn text>Cancel</v-btn>
+                    <v-btn text @click="showDetailComment()">ReadMore</v-btn>
                 </v-stepper-content>
 
                 <v-stepper-content step="3">
@@ -92,10 +95,12 @@
                     color="grey lighten-1"
                     height="200px"
                     >
-                    <!--<Comment 
-                    v-for="(p, index) in comment_list.result" 
-                    :key="p._id" :pindex="index" :process="p"
-                    />-->
+                        <p v-for="(p,index) in stage_list" 
+                        v-show = "p.fields.title == 'S' + stage"
+                        :key="p._id"
+                        :pindex="index">
+                            {{p.fields.created}}; {{p.fields.status}}
+                        </p> 
                     </v-card>
 
                     <v-btn
@@ -105,7 +110,7 @@
                     Continue
                     </v-btn>
 
-                    <v-btn text>Cancel</v-btn>
+                    <v-btn text @click="showDetailComment()">ReadMore</v-btn>
                 </v-stepper-content>
                 
                 <v-stepper-content step="4">
@@ -114,11 +119,12 @@
                     color="grey lighten-1"
                     height="200px"
                     >
-                    <!--<Comment 
-                    v-for="(p, index) in comment_list.result" 
-                    :key="p._id" :pindex="index" :process="p"
-                    />-->
-
+                        <p v-for="(p,index) in stage_list" 
+                        v-show = "p.fields.title == 'S' + stage"
+                        :key="p._id"
+                        :pindex="index">
+                            {{p.fields.created}}; {{p.fields.status}}
+                        </p> 
                     </v-card>
 
                     <v-btn
@@ -128,7 +134,7 @@
                     Continue
                     </v-btn>
 
-                    <v-btn text>Cancel</v-btn>
+                    <v-btn text @click="showDetailComment()">ReadMore</v-btn>
                 </v-stepper-content>
             </v-stepper-items>
         </v-stepper>
@@ -171,7 +177,10 @@
                     }catch(e) {
                         // console.log(e);
                     }
-                }   
+                },
+                default () {
+                    return [{fields:{title: 'undefined'}}] // for typeError: no default value
+                }
             },  
         },
         computed: {
@@ -179,8 +188,11 @@
         },
         methods: {
             showMore() {
-                this.stage_id = (this.stage_list[this.stage - 1]).pk
-                this.detailShow =! this.detailShow
+                // this.stage_id = (this.stage_list[this.stage - 1]).pk
+                this.detailShow = !this.detailShow
+            },
+            showDetailComment() {
+                this.$router.push(`/5/cmt`) 
             }
         }
     }
