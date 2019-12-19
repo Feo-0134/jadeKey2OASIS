@@ -31,6 +31,7 @@ ALLOWED_HOSTS = ['127.0.0.1', 'localhost', 'testserver']
 # Application definition
 
 INSTALLED_APPS = [
+    # 'escalation_assistant.apps.EscalationAssistantConfig',
     'corsheaders',
     'rest_framework',
     'escapp.apps.EscappConfig',
