@@ -8,19 +8,19 @@
       >
       <p>{{process_list}}</p>
 
-      <!-- <Process v-for="(p, index) in process_list" :key="p._id"
+      <Process v-for="(p, index) in process_list" :key="p._id"
       :pindex="index" :process="p" style="width: 85%"
       >
-      </Process> -->
+      </Process>
       </v-row>
     
     </v-container>    
 </template>
 
 <script>
-  // import Process from '@/components/Process'
+  import Process from '@/components/Process'
   export default {
-    // components: {Process},
+    components: {Process},
     data: () => ({
       drawer: null,
       e1: 1,
