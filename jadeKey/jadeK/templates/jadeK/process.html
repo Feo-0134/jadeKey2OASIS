@@ -1,9 +1,0 @@
-<h1>{{ process.title }} {{ process.engineer.name }}</h1>
-
-{% if error_message %}<p><strong>{{ error_message }}</strong></p>{% endif %}
-
-    <ul>
-    {% for stage in process.stage_set.all %}
-        <li><a href="{% url 'jadeK:stage' stage.id %}">{{ stage.title }}</a></li>
-    {% endfor %}
-    </ul>

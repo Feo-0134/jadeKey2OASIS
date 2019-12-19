@@ -1,9 +1,0 @@
-{% if latest_process_list %}
-    <ul>
-    {% for process in latest_process_list %}
-        <li><a href="{% url 'jadeK:process' process.id %}">{{ process.title }} {{ process.engineer }}</a></li>
-    {% endfor %}
-    </ul>
-{% else %}
-    <p>No process are available.</p>
-{% endif %}
