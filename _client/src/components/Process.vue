@@ -1,7 +1,6 @@
 <template>
     <div>
         <!-- <p>{{stage_list}}</p>  -->
-        <!-- <p>{{comment_list}}</p> -->
         <v-toolbar>
             <template v-if="$vuetify.breakpoint.smAndUp">
                 <v-avatar color="indigo" size="36" style="margin:auto">
@@ -152,7 +151,6 @@
             stage: 1,
             detailShow: false,
             stage_id: null,
-            comment_list: null,
             shortName: 'loading ...'
         }),
         asyncComputed: {
@@ -169,19 +167,6 @@
                     }
                 }   
             },
-            stage_list: {
-                async get() {
-                    try {
-                        const res = await this.$http.get(`http://127.0.0.1:8000/escdemo/process/${this.process.id}/stage_list`)
-                        return res.data
-                    }catch(e) {
-                        // console.log(e);
-                    }
-                },
-                default () {
-                    return [{fields:{title: 'undefined'}}] // for typeError: no default value
-                }
-            },  
         },
         computed: {
 
@@ -192,7 +177,7 @@
                 this.detailShow = !this.detailShow
             },
             showDetailComment() {
-                this.$router.push(`/5/cmt`) 
+                this.$router.push(`/${this.process.stage[this.stage-1]}/cmt`) 
             }
         }
     }
