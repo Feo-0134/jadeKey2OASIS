@@ -1,4 +1,5 @@
 from django.db import models
+from django.contrib.auth.models import User
 
 class Engineer(models.Model):
     ENGINEER_TITLE = [
@@ -16,7 +17,7 @@ class Engineer(models.Model):
         return self.name + ':' + self.title
     
     def __str__(self):
-        return self._id + ': ' + self.name
+        return str(self.id) + ': ' + self.name
 
 class Comment(models.Model):
     STAGE_TITLE = [
@@ -38,13 +39,11 @@ class Comment(models.Model):
     ]
     engineer = models.ForeignKey(Engineer, on_delete=models.CASCADE)
     stageTitle = models.CharField(max_length=4, choices=STAGE_TITLE)
-    
-    author = models.ForeignKey(HighTable, on_delete=models.CASCADE)
     result = models.CharField(max_length=2, choices=RESULT)  
     comment_text = models.CharField(max_length=1000)
     
     def __str__(self):
-        return self._id + ': ' + self.engineer.name + ': ' + self.stageTitle + ': ' + self.author.name
+        return str(self.id) + ': ' + self.engineer.name + ': ' + self.stageTitle
 
 class HighLvl(models.Model):
 
@@ -56,7 +55,7 @@ class HighLvl(models.Model):
         through_fields=('highlvl','comment')
     )
     def __str__(self):
-        return self._id + ': ' + self.name
+        return str(self.id) + ': ' + self.name
 
 class Stage(models.Model):
     STAGE_TITLE = [
@@ -79,7 +78,6 @@ class Stage(models.Model):
     
     engineer = models.ForeignKey(Engineer, on_delete=models.CASCADE)
     title = models.CharField(max_length=4, choices=STAGE_TITLE)
-    
     status = models.CharField(max_length=2, choices=STATUS)
     commitee_num = models.IntegerField()
     related_comment = models.ManyToManyField(
@@ -89,7 +87,7 @@ class Stage(models.Model):
     )
 
     def __str__(self):
-        return self._id + ': ' + self.engineer.name + ': ' + self.title
+        return str(self.id) + ': ' + self.engineer.name + ': ' + self.title
 
     class Meta:
         ordering = ['status']
@@ -118,7 +116,7 @@ class Process(models.Model):
     )
 
     def __str__(self):
-        return self._id + ': ' + self.title + ': ' + self.engineer.name
+        return str(self.id) + ': ' + self.title + ': ' + self.engineer.name
 
     class Meta:
         ordering = ['engineer']
@@ -133,7 +131,7 @@ class StageLinkComment(models.Model):
     stage = models.ForeignKey(Stage, on_delete=models.CASCADE)
     comment = models.ForeignKey(Comment, on_delete=models.CASCADE)
     def __str__(self):
-        return self.stage.engineer.name + ': ' + self.stage.title + ': ' + self.comment.author.name
+        return self.stage.engineer.name + ': ' + self.stage.title
 
 class MakeCommentOn(models.Model):
     highlvl = models.ForeignKey(HighLvl, on_delete=models.CASCADE)
