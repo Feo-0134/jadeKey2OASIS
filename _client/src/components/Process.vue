@@ -47,12 +47,12 @@
                     color="grey lighten-1"
                     height="200px"
                     >
-                        <p v-for="(p,index) in stage_list" 
-                        v-show = "p.fields.title == 'S' + stage"
-                        :key="p._id"
-                        :pindex="index">
-                            {{p.fields.created}}; {{p.fields.status}}
-                        </p> 
+                    <Comment
+                       v-for="(p, index) in comment_list.related_comment" :key="p._id"
+                        :pindex="index"
+                        :comment_pk="p"
+                    > </Comment>
+                       <!-- {{comment_list}}-->
                     </v-card>
 
                     <v-btn color="primary"
@@ -61,7 +61,7 @@
                     Continue
                     </v-btn>
 
-                    <v-btn text @click="showDetailComment()">ReadMore</v-btn>
+                    <v-btn text @click="showDetailComment()">Edit</v-btn>
                 </v-stepper-content>
 
                 <v-stepper-content step="2">
@@ -70,12 +70,12 @@
                     color="grey lighten-1"
                     height="200px"
                     >
-                        <p v-for="(p,index) in stage_list" 
-                        v-show = "p.fields.title == 'S' + stage"
-                        :key="p._id"
-                        :pindex="index">
-                            {{p.fields.created}}; {{p.fields.status}}
-                        </p> 
+                    <Comment
+                       v-for="(p, index) in comment_list.related_comment" :key="p._id"
+                        :pindex="index"
+                        :comment_pk="p"
+                    > </Comment>
+                       <!-- {{comment_list}}-->
                     </v-card>
 
                     <v-btn
@@ -85,7 +85,7 @@
                     Continue
                     </v-btn>
 
-                    <v-btn text @click="showDetailComment()">ReadMore</v-btn>
+                    <v-btn text @click="showDetailComment()">Edit</v-btn>
                 </v-stepper-content>
 
                 <v-stepper-content step="3">
@@ -94,12 +94,12 @@
                     color="grey lighten-1"
                     height="200px"
                     >
-                        <p v-for="(p,index) in stage_list" 
-                        v-show = "p.fields.title == 'S' + stage"
-                        :key="p._id"
-                        :pindex="index">
-                            {{p.fields.created}}; {{p.fields.status}}
-                        </p> 
+                    <Comment
+                       v-for="(p, index) in comment_list.related_comment" :key="p._id"
+                        :pindex="index"
+                        :comment_pk="p"
+                    > </Comment>
+                       <!-- {{comment_list}}-->
                     </v-card>
 
                     <v-btn
@@ -109,7 +109,7 @@
                     Continue
                     </v-btn>
 
-                    <v-btn text @click="showDetailComment()">ReadMore</v-btn>
+                    <v-btn text @click="showDetailComment()">Edit</v-btn>
                 </v-stepper-content>
                 
                 <v-stepper-content step="4">
@@ -118,12 +118,12 @@
                     color="grey lighten-1"
                     height="200px"
                     >
-                        <p v-for="(p,index) in stage_list" 
-                        v-show = "p.fields.title == 'S' + stage"
-                        :key="p._id"
-                        :pindex="index">
-                            {{p.fields.created}}; {{p.fields.status}}
-                        </p> 
+                    <Comment
+                       v-for="(p, index) in comment_list.related_comment" :key="p._id"
+                        :pindex="index"
+                        :comment_pk="p"
+                    > </Comment>
+                       <!-- {{comment_list}}-->
                     </v-card>
 
                     <v-btn
@@ -133,7 +133,7 @@
                     Continue
                     </v-btn>
 
-                    <v-btn text @click="showDetailComment()">ReadMore</v-btn>
+                    <v-btn text @click="showDetailComment()">Edit</v-btn>
                 </v-stepper-content>
             </v-stepper-items>
         </v-stepper>
@@ -141,12 +141,12 @@
 </template>
 
 <script>
-    // import Comment from '@/components/Comment'
+    import Comment from '@/components/Comment'
     export default {
         props: {
             process: Object,
         },
-        // components: { Comment },
+        components: { Comment },
         data: () => ({
             stage: 1,
             detailShow: false,
@@ -161,12 +161,26 @@
                         // console.log(res)
                         var nameArr = res.data.name.split(' ')
                         this.shortName = nameArr[0][0] + nameArr[nameArr.length - 1][0]
+                        this.stage = parseInt(this.process.status.split('S')[1])
                         return res.data
                     }catch(e) {
                         // console.log(e);
                     }
                 }   
             },
+            comment_list: {
+                async get() {
+                try {
+                    const res = await this.$http.get(`http://localhost:8000/escdemo/stage/${this.process.stage[this.stage-1]}`);
+                    return res.data
+                }catch(e) {
+                    // console.log(e);
+                }
+                },
+                default () {
+                    return [{fields:{title: 'undefined'}}] // for typeError: no default value
+                }
+            }
         },
         computed: {
 
@@ -176,9 +190,9 @@
                 // this.stage_id = (this.stage_list[this.stage - 1]).pk
                 this.detailShow = !this.detailShow
             },
-            showDetailComment() {
-                this.$router.push(`/${this.process.stage[this.stage-1]}/cmt`) 
-            }
+            // showDetailComment() {
+            //     this.$router.push(`/${this.process.stage[this.stage-1]}/cmt`) 
+            // }
         }
     }
 </script>
