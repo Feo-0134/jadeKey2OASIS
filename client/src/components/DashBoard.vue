@@ -31,7 +31,7 @@
       process_list: {
         async get() {
           try {
-            const res = await this.$http.get(`http://localhost:8000/escdemo/process`);
+            const res = await this.$http.get(`http://localhost:8000/assistant/process`);
             return res.data
           }catch(e) {
             // console.log(e);

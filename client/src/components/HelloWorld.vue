@@ -15,7 +15,7 @@ export default {
     process_list: {
       async get() {
         try {
-          const res = await this.$http.get(`http://127.0.0.1:8000/escdemo/`);
+          const res = await this.$http.get(`http://127.0.0.1:8000/assistant/`);
           return res.data
         }catch(e) {
           // console.log(e);

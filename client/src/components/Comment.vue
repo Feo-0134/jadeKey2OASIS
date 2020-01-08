@@ -40,7 +40,7 @@ export default {
       comment_list: {
         async get() {
           try {
-            const res = await this.$http.get(`http://127.0.0.1:8000/escdemo/stage/${this.stage_pk}/comments_list/`);
+            const res = await this.$http.get(`http://127.0.0.1:8000/assistant/stage/${this.stage_pk}/comments_list/`);
             return res.data
           }catch(e) {
             // console.log(e);

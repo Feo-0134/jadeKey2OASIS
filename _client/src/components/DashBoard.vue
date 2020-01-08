@@ -8,7 +8,7 @@
       >
       <!-- <p>{{process_list}}</p> -->
 
-      <Process v-for="(p, index) in process_list" :key="p._id"
+      <Process v-for="(p, index) in process_list.results" :key="p._id"
       :pindex="index" :process="p"
       style="width: 85%"
       >
@@ -32,7 +32,7 @@
       process_list: {
         async get() {
           try {
-            const res = await this.$http.get(`http://localhost:8000/escdemo/process`);
+            const res = await this.$http.get(`http://localhost:8000/assistant/process`);
             return res.data
           }catch(e) {
             // console.log(e);

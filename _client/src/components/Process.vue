@@ -157,7 +157,7 @@
             engineer: {
                 async get() {
                     try {
-                        const res = await this.$http.get(`http://127.0.0.1:8000/escdemo/engineer/${this.process.engineer}`);
+                        const res = await this.$http.get(`http://127.0.0.1:8000/assistant/engineer/${this.process.engineer}`);
                         // console.log(res)
                         var nameArr = res.data.name.split(' ')
                         this.shortName = nameArr[0][0] + nameArr[nameArr.length - 1][0]
@@ -171,7 +171,7 @@
             comment_list: {
                 async get() {
                 try {
-                    const res = await this.$http.get(`http://localhost:8000/escdemo/stage/${this.process.stage[this.stage-1]}`);
+                    const res = await this.$http.get(`http://localhost:8000/assistant/stage/${this.process.stage[this.stage-1]}`);
                     return res.data
                 }catch(e) {
                     // console.log(e);

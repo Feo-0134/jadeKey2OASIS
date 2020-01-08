@@ -30,7 +30,7 @@
 <script>
 export default {
     props: {
-        comment_pk: String,
+        comment_pk: Number,
     },
     data: ()=> ({
     }),
@@ -40,7 +40,7 @@ export default {
       comment: {
         async get() {
           try {
-            const res = await this.$http.get(`http://localhost:8000/escdemo/comment/${this.comment_pk}`);
+            const res = await this.$http.get(`http://localhost:8000/assistant/comment/${this.comment_pk}`);
             return res.data
           }catch(e) {
             // console.log(e);
