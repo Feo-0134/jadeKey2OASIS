@@ -58,4 +58,5 @@ urlpatterns = [
     path('users/<pk>/', UserDetails.as_view()),
     path('groups/', GroupList.as_view()),
     path('escdemo/', include('escdemo.urls')),
+    path('escBackend/', include('escBackend.urls')),
 ]
