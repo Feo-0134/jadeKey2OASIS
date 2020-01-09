@@ -30,13 +30,13 @@ class Engineer(models.Model):
 
 class Process(models.Model):
     Kind = models.ForeignKey(ProcessKind, on_delete=models.CASCADE)
-    ProcessOwner = models.ForeignKey(Engineer, on_delete=CASCADE)
+    ProcessOwner = models.ForeignKey(Engineer, on_delete=models.CASCADE)
     ProcessReviewer = models.ManyToManyField(
         Engineer,
         through = 'ProcessReview',
-        throughfields = ('Process', 'Reviewer')
+        through_fields = ('Process', 'Reviewer')
     )
-    ProcessCurrentStage = models.ForeignKey(StageKind, on_delete=CASCADE)
+    ProcessCurrentStage = models.ForeignKey(StageKind, on_delete=models.CASCADE)
     Stage1TryTimes = models.BigIntegerField(default=-1)
     Stage2TryTimes = models.BigIntegerField(default=-1)
     Stage3TryTimes = models.BigIntegerField(default=-1)

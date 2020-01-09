@@ -21,11 +21,11 @@ class EngineerViewSet(viewsets.ModelViewSet):
     serializer_class = EngineerSerializer
 
 class ProcessViewSet(viewsets.ModelViewSet):
-    queryset = Process.object.all()
+    queryset = Process.objects.all()
     serializer_class = ProcessSerializer
 
 class ProcessReviewViewSet(viewsets.ModelViewSet):
-    queryset = ProcessReview.object.all()
+    queryset = ProcessReview.objects.all()
     serializer_class = ProcessReviewSerializer
 
 class CommentViewSet(viewsets.ModelViewSet):
