@@ -20,6 +20,10 @@ class EngineerViewSet(viewsets.ModelViewSet):
     queryset = Engineer.objects.all()
     serializer_class = EngineerSerializer
 
+class ReviewerViewSet(viewsets.ModelViewSet):
+    queryset = Reviewer.objects.all()
+    serializer_class = ReviewerSerializer
+
 class ProcessViewSet(viewsets.ModelViewSet):
     queryset = Process.objects.all()
     serializer_class = ProcessSerializer

@@ -22,6 +22,11 @@ class EngineerSerializer(serializers.ModelSerializer):
         model = Engineer
         fields = ['id', 'Alias', 'Name', 'Title', 'EngineerLatestProcess', 'EngineerLatestStage', 'IsReviewer']
 
+class ReviewerSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = Reviewer
+        fields = ['id', 'Alias', 'Name', 'Title']
+
 class ProcessSerializer(serializers.ModelSerializer):
     class Meta:
         model = Process

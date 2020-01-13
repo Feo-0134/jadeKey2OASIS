@@ -1,46 +1,46 @@
 <template>
   <v-container>
-    {{comment_list}}
-    <v-card
-      v-for="(p,index) in comment_list" 
-      :key="p._id"
-      :pindex="index"
-      class="mx-auto"
-      max-width="344"
-      outlined
-      >
-      <v-list-item three-line>
-        <v-list-item-content>
-          <div class="overline mb-4">OVERLINE</div>
-          <v-list-item-title class="headline mb-1">Headline 5</v-list-item-title>
-          <v-list-item-subtitle>Greyhound divisely hello coldly fonwderfully</v-list-item-subtitle>
-        </v-list-item-content>
+    <!-- {{comment_list}} -->
+  <v-card
+    class="mx-auto"
+    max-width="344"
+    outlined
+  >
+    <v-list-item three-line>
+      <v-list-item-content>
+        <div class="overline mb-4">{{comment.id}}-{{comment.engineer}}-{{comment.stageTitle}}</div>
+        <v-list-item-title class="headline mb-1">{{comment.result}}</v-list-item-title>
+        <v-list-item-subtitle>{{comment.comment_text}}</v-list-item-subtitle>
+      </v-list-item-content>
 
-        <v-list-item-avatar
-          tile
-          size="80"
-          color="grey"
-        ></v-list-item-avatar>
-      </v-list-item>
+      <v-list-item-avatar
+        tile
+        size="80"
+        color="grey"
+      ></v-list-item-avatar>
+    </v-list-item>
 
-      <v-card-actions>
-        <v-btn text>Button</v-btn>
-        <v-btn text>Button</v-btn>
-      </v-card-actions>
-    </v-card>
+    <v-card-actions>
+      <v-btn text>Edit</v-btn>
+    </v-card-actions>
+  </v-card>
   </v-container>
 </template>
 
 <script>
 export default {
+    props: {
+        comment_pk: Number,
+    },
     data: ()=> ({
-      stage_pk: this.$router.currentRoute.path.split('/')[1],
     }),
+    computed: {
+    },
     asyncComputed: {
-      comment_list: {
+      comment: {
         async get() {
           try {
-            const res = await this.$http.get(`http://127.0.0.1:8000/assistant/stage/${this.stage_pk}/comments_list/`);
+            const res = await this.$http.get(`http://localhost:8000/assistant/comment/${this.comment_pk}`);
             return res.data
           }catch(e) {
             // console.log(e);

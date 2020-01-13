@@ -3,7 +3,8 @@
     <v-navigation-drawer
       v-model="drawer"
       app
-      clipped>
+      clipped
+    >
       <v-list dense>
         <v-list-item link>
           <v-list-item-action>
@@ -29,18 +30,11 @@
       clipped-left
     >
       <v-app-bar-nav-icon @click.stop="drawer = !drawer" />
-      <v-toolbar-title>Application</v-toolbar-title>
+      <v-toolbar-title>Escalation Reviewer</v-toolbar-title>
     </v-app-bar>
-
     <v-content>
-      <v-container
-        class="fill-height"
-        fluid
-      >
-        <DashBoard />
-      </v-container>
+      <router-view></router-view>
     </v-content>
-
     <v-footer app>
       <span>&copy; 2019</span>
     </v-footer>
@@ -48,19 +42,19 @@
 </template>
 
 <script>
-import DashBoard from './components/DashBoard';
+// import DashBoard from './components/DashBoard';
 
 export default {
   name: 'App',
 
-  components: {
-    DashBoard,
-  },
+  // components: {
+  //   DashBoard,
+  // },
 
   data: () => ({
     drawer: null,
   }),
-
+  
   created () {
     this.$vuetify.theme.dark = true
   },
