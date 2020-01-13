@@ -20,7 +20,7 @@
             </v-list-item-title>
           </v-list-item-content>
         </v-list-item>
-        <v-subheader class="mt-4 grey--text text--darken-1">SUBSCRIPTIONS</v-subheader>
+        <v-subheader class="mt-4 grey--text text--darken-1">ENGINEERS</v-subheader>
         <v-list>
           <v-list-item
             v-for="item in items2"
@@ -87,8 +87,9 @@
           justify="center"
           align="center"
         >
-          <v-col class="shrink">
-            <DefaultInput />
+          <v-col cols='3' v-for="n in 8"
+          :key="n">
+            <Engineer/>
           </v-col>
         </v-row>
       </v-container>
@@ -97,13 +98,14 @@
 </template>
 
 <script>
-  import DefaultInput from './components/DefaultInput';
+  // import DefaultInput from './components/DefaultInput.vue';
+  import Engineer from './components/Engineer.vue';
 
   export default {
     props: {
       source: String,
     },
-    components: { DefaultInput },
+    components: {  Engineer },
     data: () => ({
       drawer: null,
       items: [
