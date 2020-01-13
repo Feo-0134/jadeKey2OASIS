@@ -11,4 +11,5 @@ admin.site.register(Reviewer)
 admin.site.register(Process)
 admin.site.register(ProcessReview)
 admin.site.register(Comment)
+admin.site.register(ProcessComments)
 
