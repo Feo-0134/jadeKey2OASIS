@@ -88,6 +88,7 @@
           align="center"
         >
           <v-col class="shrink">
+            <DefaultInput />
           </v-col>
         </v-row>
       </v-container>
@@ -96,10 +97,13 @@
 </template>
 
 <script>
+  import DefaultInput from './components/DefaultInput';
+
   export default {
     props: {
       source: String,
     },
+    components: { DefaultInput },
     data: () => ({
       drawer: null,
       items: [

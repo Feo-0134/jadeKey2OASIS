@@ -1,6 +1,6 @@
 <template>
     <v-container>
-        {{}}
+        {{ dada }}
     </v-container>
 </template>
 <script>
@@ -10,7 +10,7 @@ export default {
     },
     components: {},
     data: () => ({
-        engineer_id: null,
+        engineer_id: 1,
     }),
     asyncComputed: {
         dada: {
