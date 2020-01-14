@@ -87,11 +87,14 @@
           justify="center"
           align="center"
         >
+        <DefaultForm />
           <v-col cols='3' v-for="n in 8"
           :key="n">
-            <Engineer/>
+            <!-- <Engineer /> -->
+            
           </v-col>
         </v-row>
+        
       </v-container>
     </v-content>
   </v-app>
@@ -99,13 +102,14 @@
 
 <script>
   // import DefaultInput from './components/DefaultInput.vue';
-  import Engineer from './components/Engineer.vue';
+  // import Engineer from './components/Engineer.vue';
+  import DefaultForm from './components/DefaultForm.vue';
 
   export default {
     props: {
       source: String,
     },
-    components: {  Engineer },
+    components: { DefaultForm },
     data: () => ({
       drawer: null,
       items: [
