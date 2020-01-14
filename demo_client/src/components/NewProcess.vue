@@ -90,7 +90,7 @@ export default {
       },
       async newProcess() {
         try {
-          // this.validate ()
+          this.validate ()
           // let that = this
           const res = await this.$http.post(
             'http://localhost:8000/escBackend/process/',

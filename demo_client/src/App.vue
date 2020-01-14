@@ -39,6 +39,7 @@
         <v-list-item
           class="mt-4"
           link
+          @click="route('/newProcess')"
         >
           <v-list-item-action>
             <v-icon color="grey darken-1">mdi-plus-circle-outline</v-icon>
@@ -87,12 +88,13 @@
           justify="center"
           align="center"
         >
-        <NewProcess />
+        <router-view></router-view>
+        <!-- <NewProcess />
           <v-col cols='3' v-for="n in 8"
           :key="n">
-            <!-- <Engineer /> -->
+            <Engineer />
             
-          </v-col>
+          </v-col> -->
         </v-row>
         
       </v-container>
@@ -103,13 +105,13 @@
 <script>
   // import DefaultInput from './components/DefaultInput.vue';
   // import Engineer from './components/Engineer.vue';
-  import NewProcess from './components/NewProcess.vue';
+  // import NewProcess from './components/NewProcess.vue';
 
   export default {
     props: {
       source: String,
     },
-    components: { NewProcess },
+    // components: { NewProcess },
     data: () => ({
       drawer: null,
       items: [
@@ -130,5 +132,10 @@
     created () {
       this.$vuetify.theme.dark = true
     },
+    methods: {
+      route(path) {
+        this.$router.push(path)
+      }
+    }
   }
 </script>
