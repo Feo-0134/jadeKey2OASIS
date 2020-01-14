@@ -87,7 +87,7 @@
           justify="center"
           align="center"
         >
-        <DefaultForm />
+        <NewProcess />
           <v-col cols='3' v-for="n in 8"
           :key="n">
             <!-- <Engineer /> -->
@@ -103,13 +103,13 @@
 <script>
   // import DefaultInput from './components/DefaultInput.vue';
   // import Engineer from './components/Engineer.vue';
-  import DefaultForm from './components/DefaultForm.vue';
+  import NewProcess from './components/NewProcess.vue';
 
   export default {
     props: {
       source: String,
     },
-    components: { DefaultForm },
+    components: { NewProcess },
     data: () => ({
       drawer: null,
       items: [
