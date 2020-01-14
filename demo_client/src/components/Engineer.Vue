@@ -116,11 +116,10 @@
 <script>
 export default {
     props: {
-        engineer_id: String
+        engineer_id: Number
     },
     components: {},
     data: () => ({
-        engineer_id: 1,
         fullName: '',
         shortName: '',
         process_Title: '',

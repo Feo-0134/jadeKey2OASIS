@@ -89,12 +89,6 @@
           align="center"
         >
         <router-view></router-view>
-        <!-- <NewProcess />
-          <v-col cols='3' v-for="n in 8"
-          :key="n">
-            <Engineer />
-            
-          </v-col> -->
         </v-row>
         
       </v-container>
@@ -103,15 +97,10 @@
 </template>
 
 <script>
-  // import DefaultInput from './components/DefaultInput.vue';
-  // import Engineer from './components/Engineer.vue';
-  // import NewProcess from './components/NewProcess.vue';
-
   export default {
     props: {
       source: String,
     },
-    // components: { NewProcess },
     data: () => ({
       drawer: null,
       items: [

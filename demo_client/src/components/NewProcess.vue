@@ -91,22 +91,23 @@ export default {
       async newProcess() {
         try {
           this.validate ()
-          // let that = this
-          const res = await this.$http.post(
-            'http://localhost:8000/escBackend/process/',
-              {
-                Kind: 1,
-                ProcessOwner: 1,
-                ProcessCurrentStage: 1,
-                Stage1TryTimes: 1,
-                Stage2TryTimes: -1,
-                Stage3TryTimes: -1,
-                Stage4TryTimes: -1
-              },
-          );
-          // location.reload();
-          window.console.log(res.data)
-          return res.data
+          if (this.snackbar === true) {
+            const res = await this.$http.post(
+              'http://localhost:8000/escBackend/process/',
+                {
+                  Kind: 1,
+                  ProcessOwner: 1,
+                  ProcessCurrentStage: 1,
+                  Stage1TryTimes: 1,
+                  Stage2TryTimes: -1,
+                  Stage3TryTimes: -1,
+                  Stage4TryTimes: -1
+                },
+            );
+            // location.reload();
+            window.console.log(res.data)
+            return res.data
+          }
         }catch(e) {
           window.console.log(e);
         }
