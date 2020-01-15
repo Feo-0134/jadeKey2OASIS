@@ -17,7 +17,7 @@
             </v-card-title>
 
             <v-card-text class="headline font-weight-bold">
-            "Turns out semicolon-less style is easier and safer in TS because most gotcha edge cases are type invalid as well."
+            {{comment_object}}
             </v-card-text>
 
             <v-card-actions>
@@ -52,7 +52,7 @@
 <script>
 export default {
     props: {
-
+        comment_object: Object
     },
     components: {},
     data: () => ({

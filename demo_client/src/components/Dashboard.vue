@@ -7,10 +7,10 @@
           justify="center"
           align="center"
         >
-        <v-col cols='4'  v-for="n in engineer_cnt"
-          :key="n">
-            <Engineer :engineer_id = "n"/>
-        </v-col>
+            <v-col cols='4'  v-for="n in engineer_list"
+            :key="n">
+                <Engineer :engineer_info = "n"/>
+            </v-col>
         </v-row>
         <v-subheader class="headline">Process List</v-subheader>
         <v-divider></v-divider>
@@ -18,22 +18,22 @@
           justify="center"
           align="center"
         >
-        <v-col cols='4'  v-for="n in process_cnt"
+        <v-col cols='4'  v-for="n in process_list"
           :key="n"
           >
-          <Process :process_object="process_list[n-1]" />
+          <Process :process_object="n" />
         </v-col>
         </v-row>
-        <v-subheader class="headline">Engineer List</v-subheader>
+        <v-subheader class="headline">Comment List</v-subheader>
         <v-divider></v-divider>
         <v-row
           justify="center"
           align="center"
         >
-        <v-col cols='4'  v-for="n in comment_cnt"
+        <v-col cols='4'  v-for="n in comment_list"
           :key="n"
           >
-          <Comment />
+          <Comment :comment_object="n"/>
         </v-col>
         </v-row>
         <v-subheader class="headline">Reviewer List</v-subheader>
@@ -42,10 +42,10 @@
           justify="center"
           align="center"
         >
-        <v-col cols='4'  v-for="n in reviewer_cnt"
+        <v-col cols='4'  v-for="n in reviewer_list"
           :key="n"
           >
-          <Engineer />
+          <Engineer :engineer_info = "n"/>
         </v-col>
         </v-row>
     </v-container>

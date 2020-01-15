@@ -1,6 +1,6 @@
 <template>
     <v-container>
-        <!-- {{ process_object }} -->
+        
         <v-card>
             <v-app-bar dark color="red">
 
@@ -47,6 +47,7 @@
             </v-app-bar>
 
             <v-container>
+                {{ process_object }}
             <v-row dense>
                 <v-col
                 align="center"

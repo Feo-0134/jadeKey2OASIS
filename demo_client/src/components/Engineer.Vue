@@ -7,13 +7,15 @@
             </v-list-item-avatar>
             <v-list-item-content>
                 <v-list-item-title class="headline">{{ fullName }}</v-list-item-title>
-                <v-list-item-subtitle>{{ process_Title }}</v-list-item-subtitle>
+                <v-list-item-subtitle >({{ alias }})</v-list-item-subtitle>
+
             </v-list-item-content>
-            <v-btn @click="detailShow = !detailShow">
+            <v-btn @click="detailShow = !detailShow" color="#5F6062">
             <v-icon>mdi-unfold-more-horizontal</v-icon>
             </v-btn>
             </v-list-item>
             <v-stepper v-show='detailShow' v-model="e1">
+                <div class="ma-3">{{ process_Title }}</div>
                 <v-stepper-header>
                     <v-stepper-step :complete="e1 > 1" step="1"></v-stepper-step>
 
@@ -85,7 +87,7 @@
             </v-stepper>
 
             <v-card-text>
-            <!-- {{ engineer_info }} -->
+            {{ engineer_info }}
             <v-breadcrumbs :items="items" divider="-"></v-breadcrumbs>
             </v-card-text>
 
@@ -116,13 +118,10 @@
 <script>
 export default {
     props: {
-        engineer_id: Number
+        engineer_info: Object
     },
     components: {},
     data: () => ({
-        fullName: '',
-        shortName: '',
-        process_Title: '',
         e1: 0,
         items: [
                 {
@@ -154,28 +153,44 @@ export default {
         detailShow: false,
     }),
     asyncComputed: {
-        engineer_info: {
-            async get() {
-                try {
-                    const res = await this.$http.get(`http://127.0.0.1:8000/escBackend/engineer/${this.engineer_id}/`)
+        // engineer_info: {
+        //     async get() {
+        //         try {
+        //             const res = await this.$http.get(`http://127.0.0.1:8000/escBackend/engineer/${this.engineer_id}/`)
                     
-                    const displayName = res.data.Name
-                    this.fullName = res.data.Name
-                    const nameArray = displayName.split(' ')
-                    const len = nameArray.length
-                    this.shortName = nameArray[0][0] + nameArray[len-1][0]
+        //             const displayName = res.data.Name
+        //             this.fullName = res.data.Name
+        //             const nameArray = displayName.split(' ')
+        //             const len = nameArray.length
+        //             this.shortName = nameArray[0][0] + nameArray[len-1][0]
 
-                    this.process_Title = res.data.Title == 1 ? 'SEE Escalation' : 'EE Escalation'
+        //             this.process_Title = res.data.Title == 1 ? 'SEE Escalation' : 'EE Escalation'
 
-                    return res.data
-                }catch(e) {
-                    window.console.log(e)
-                }
-            }
-        }
+        //             return res.data
+        //         }catch(e) {
+        //             window.console.log(e)
+        //         }
+        //     }
+        // }
     },
     computed: {
-
+        fullName: function() {
+            return this.engineer_info.Name
+        },
+        shortName: function() {
+            let nameArray = []
+            nameArray.push(this.engineer_info.Name[0])
+            nameArray.push(this.engineer_info.Name[1].toUpperCase())
+            return nameArray[0][0] + nameArray[1][0]
+        },
+        alias: function() {
+            return this.engineer_info.Alias
+        },
+        process_Title: function() {
+            if(this.engineer_info.Title == 1) 
+                return 'SEE Escalation' 
+            return  'EE Escalation'
+        }
     },
     methods: {
 
