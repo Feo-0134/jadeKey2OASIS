@@ -87,7 +87,7 @@
                     </v-avatar> -->
                     </div>
                 </v-card>
-                <v-icon class="my-3" x-large=true>
+                <v-icon class="my-3" x-large>
                     mdi-timeline-clock-outline
                 </v-icon>
                 </v-col>

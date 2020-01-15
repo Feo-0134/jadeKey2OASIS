@@ -24,19 +24,46 @@
           <Process :process_object="process_list[n-1]" />
         </v-col>
         </v-row>
+        <v-subheader class="headline">Engineer List</v-subheader>
+        <v-divider></v-divider>
+        <v-row
+          justify="center"
+          align="center"
+        >
+        <v-col cols='4'  v-for="n in comment_cnt"
+          :key="n"
+          >
+          <Comment />
+        </v-col>
+        </v-row>
+        <v-subheader class="headline">Reviewer List</v-subheader>
+        <v-divider></v-divider>
+        <v-row
+          justify="center"
+          align="center"
+        >
+        <v-col cols='4'  v-for="n in reviewer_cnt"
+          :key="n"
+          >
+          <Engineer />
+        </v-col>
+        </v-row>
     </v-container>
 </template>
 <script>
 import Engineer from '@/components/Engineer.vue';
 import Process from '@/components/Process.vue';
+import Comment from '@/components/Comment.vue';
 export default {
     props: {
 
     },
-    components: { Engineer, Process },
+    components: { Engineer, Process, Comment },
     data: () => ({
         engineer_cnt: 0,
         process_cnt: 0,
+        comment_cnt: 0,
+        reviewer_cnt: 0,
     }),
     asyncComputed: {
         engineer_list: {
@@ -55,6 +82,28 @@ export default {
                 try {
                     const res = await this.$http.get(`http://127.0.0.1:8000/escBackend/process/`)
                     this.process_cnt = res.data.length
+                    return res.data
+                }catch(e) {
+                    window.console.log(e)
+                }
+            }
+        },
+        comment_list: {
+            async get() {
+                try {
+                    const res = await this.$http.get(`http://127.0.0.1:8000/escBackend/comment/`)
+                    this.comment_cnt = res.data.length
+                    return res.data
+                }catch(e) {
+                    window.console.log(e)
+                }
+            }
+        },
+        reviewer_list: {
+            async get() {
+                try {
+                    const res = await this.$http.get(`http://127.0.0.1:8000/escBackend/reviewer/`)
+                    this.reviewer_cnt = res.data.length
                     return res.data
                 }catch(e) {
                     window.console.log(e)
