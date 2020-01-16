@@ -7,8 +7,8 @@
           justify="center"
           align="center"
         >
-            <v-col cols='4'  v-for="n in engineer_list"
-            :key="n">
+            <v-col cols='4'  v-for="(n, i) in engineer_list"
+            :key="i">
                 <Engineer :engineer_info = "n"/>
             </v-col>
         </v-row>
@@ -18,8 +18,8 @@
           justify="center"
           align="center"
         >
-        <v-col cols='4'  v-for="n in process_list"
-          :key="n"
+        <v-col cols='4'  v-for="(n, i) in process_list"
+          :key="i"
           >
           <Process :process_object="n" />
         </v-col>
@@ -30,8 +30,8 @@
           justify="center"
           align="center"
         >
-        <v-col cols='4'  v-for="n in comment_list"
-          :key="n"
+        <v-col cols='4'  v-for="(n, i) in comment_list"
+          :key="i"
           >
           <Comment :comment_object="n"/>
         </v-col>
@@ -42,8 +42,8 @@
           justify="center"
           align="center"
         >
-        <v-col cols='4'  v-for="n in reviewer_list"
-          :key="n"
+        <v-col cols='4'  v-for="(n, i) in reviewer_list"
+          :key="i"
           >
           <Engineer :engineer_info = "n"/>
         </v-col>

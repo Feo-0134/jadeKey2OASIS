@@ -7,8 +7,8 @@
     >
       <v-list dense>
         <v-list-item
-          v-for="item in items"
-          :key="item.text"
+          v-for="(item, i) in items"
+          :key="i"
           @click="route(item.routeName)"
           link
         >
@@ -24,8 +24,8 @@
         <v-subheader class="mt-4 grey--text text--darken-1">REVIEWERS</v-subheader>
         <v-list>
           <v-list-item
-            v-for="item in items2"
-            :key="item.text"
+            v-for="(item, i) in items2"
+            :key="i"
             link
           >
             <v-list-item-avatar>

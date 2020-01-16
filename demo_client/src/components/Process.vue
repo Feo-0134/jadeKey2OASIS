@@ -1,6 +1,5 @@
 <template>
     <v-container>
-        
         <v-card>
             <v-app-bar dark color="red">
 
@@ -8,42 +7,56 @@
 
             <v-spacer></v-spacer>
 
-    <v-dialog
-      v-model="dialog"
-      width="500">
-      <template v-slot:activator="{ on }">
-        <v-btn icon v-on="on">
-                <v-icon>mdi-account-edit-outline</v-icon>
-            </v-btn>
-      </template>
+            <v-dialog v-model="dialog" width="500">
+                <template v-slot:activator="{ on }">
+                    <v-btn icon v-on="on">
+                            <v-icon>mdi-account-edit-outline</v-icon>
+                        </v-btn>
+                </template>
 
-      <v-card>
-        <v-card-title
-          class="headline grey lighten-2"
-          primary-title
-          color="blue"
-        >
-          Privacy Policy
-        </v-card-title>
+                <v-card>
+                    <v-card-title
+                    class="headline red lighten-2"
+                    primary-title
+                    >
+                    Add Reviewer
+                    </v-card-title>
 
-        <v-card-text>
-          Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.
-        </v-card-text>
+                    <v-card class="mx-auto" max-width="400">
+                        <v-list
+                            :flat="flat"
+                            :dense="dense"
+                        >
+                            <v-list-item-group
+                                v-model="model"
+                                :multiple="multiple"
+                                :mandatory="mandatory"
+                                color="indigo"
+                            >
+                            <v-list-item
+                                v-for="(reviewer,i) in reviewer_list"
+                                :key="i"
+                            >
+                                <v-list-item-icon>
+                                <v-icon large> mdi-github-box </v-icon>
+                                </v-list-item-icon>
 
-        <v-divider></v-divider>
-
-        <v-card-actions>
-          <v-spacer></v-spacer>
-          <v-btn
-            color="primary"
-            text
-            @click="dialog = false"
-          >
-            I accept
-          </v-btn>
-        </v-card-actions>
-      </v-card>
-    </v-dialog>
+                                <v-list-item-content>
+                                <v-list-item-title v-text="reviewer.Name"></v-list-item-title>
+                                ({{reviewer.Alias}})
+                                </v-list-item-content>
+                            </v-list-item>
+                            </v-list-item-group>
+                        </v-list>
+                    </v-card>
+                    <v-card-actions>
+                    <v-spacer></v-spacer>
+                    <v-btn color="primary" text @click="setReviewer">
+                        Confirm
+                    </v-btn>
+                    </v-card-actions>
+                </v-card>
+            </v-dialog>
             </v-app-bar>
 
             <v-container>
@@ -58,8 +71,7 @@
                 >
                 <v-card
                     :color="item.color"
-                    dark
-                >
+                    dark >
                     <div class="d-flex flex-no-wrap justify-space-between">
                     <div>
                         <v-card-title
@@ -117,6 +129,17 @@ export default {
     data: () => ({
         stage_cnt: 0,
         dialog: false,
+        reviewerID: -1,
+        item: {
+            icon: 'mdi-wifi',
+            text: 'Wifi',
+        },
+        model: 1,
+        multiple: false,
+        mandatory: false,
+        flat: false,
+        dense: false,
+        count: 4,
         items: [
             {
             color: '#5F6062',
@@ -156,6 +179,16 @@ export default {
                 }
             }
         },
+        reviewer_list: {
+            async get() {
+                try {
+                    const res = await this.$http.get(`http://127.0.0.1:8000/escBackend/reviewer/`)
+                    return res.data
+                }catch(e) {
+                    window.console.log(e)
+                }
+            }
+        }
     },
     computed: {
         process_title: function() {
@@ -171,7 +204,24 @@ export default {
         }
     },
     methods: {
-        
+        async setReviewer() {
+            try {
+                    const that = this
+                    const res = await this.$http.post(
+                    'http://localhost:8000/escBackend/process_review/',
+                        {
+                            Process: that.process_object.id,
+                            Reviewer: that.reviewer_list[that.model].id
+                        },
+                    );
+                    location.reload();
+                    // window.console.log(res.data)
+                    this.dialog = false
+                    return res.data
+            }catch(e) {
+                window.console.log(e);
+            }
+        }
     }
 
 }

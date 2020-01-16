@@ -153,25 +153,6 @@ export default {
         detailShow: false,
     }),
     asyncComputed: {
-        // engineer_info: {
-        //     async get() {
-        //         try {
-        //             const res = await this.$http.get(`http://127.0.0.1:8000/escBackend/engineer/${this.engineer_id}/`)
-                    
-        //             const displayName = res.data.Name
-        //             this.fullName = res.data.Name
-        //             const nameArray = displayName.split(' ')
-        //             const len = nameArray.length
-        //             this.shortName = nameArray[0][0] + nameArray[len-1][0]
-
-        //             this.process_Title = res.data.Title == 1 ? 'SEE Escalation' : 'EE Escalation'
-
-        //             return res.data
-        //         }catch(e) {
-        //             window.console.log(e)
-        //         }
-        //     }
-        // }
     },
     computed: {
         fullName: function() {
