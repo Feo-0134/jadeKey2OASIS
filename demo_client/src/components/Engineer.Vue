@@ -101,6 +101,7 @@
             <v-btn
                 text
                 color="blue accent-4"
+                @click="showProcessDetail"
             >
                 Show More
             </v-btn>
@@ -171,10 +172,16 @@ export default {
             if(this.engineer_info.Title == 1) 
                 return 'SEE Escalation' 
             return  'EE Escalation'
+        },
+        process_id: function() {
+            return this.engineer_info.EngineerLatestProcess
         }
     },
     methods: {
-
+        showProcessDetail () {
+            const newPath = '/processDetail/' + this.process_id
+            this.$router.push(newPath)
+        }
     }
 
 }

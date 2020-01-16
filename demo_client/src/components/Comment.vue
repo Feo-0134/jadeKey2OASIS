@@ -2,18 +2,18 @@
     <v-container>
         <v-card
         class="mx-auto"
-        color="#26c6da"
+        color="#AF7A6D"
         dark
         max-width="400"
         >
             <v-card-title>
-            <v-icon
+            <!-- <v-icon
                 large
                 left
             >
                 mdi-twitter
-            </v-icon>
-            <span class="title font-weight-light">Twitter</span>
+            </v-icon> -->
+            <span class="title font-weight-light">Comment</span>
             </v-card-title>
 
             <v-card-text class="headline font-weight-bold">
@@ -33,7 +33,7 @@
                 <v-list-item-title>Evan You</v-list-item-title>
                 </v-list-item-content>
 
-                <v-row
+                <!-- <v-row
                 align="center"
                 justify="end"
                 >
@@ -42,11 +42,10 @@
                 <span class="mr-1">·</span>
                 <v-icon class="mr-1">mdi-share-variant</v-icon>
                 <span class="subheading">45</span>
-                </v-row>
+                </v-row> -->
             </v-list-item>
             </v-card-actions>
         </v-card>
-
     </v-container>
 </template>
 <script>

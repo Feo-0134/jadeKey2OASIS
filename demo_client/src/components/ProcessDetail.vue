@@ -15,6 +15,21 @@
             <v-card class="elevation-2">
                 <v-card-title class="headline">{{n.title}}</v-card-title>
                 <Comment v-for="m in comment_list" :key="m" :comment_object="m" v-show="m.Stage === n.stage"/>
+                <v-row
+                        align="center"
+                        justify="start"
+                        >
+                    <v-btn class="ma-5" color="#E57373">
+                        new comment
+                    </v-btn>
+                    <v-spacer></v-spacer>
+                    <v-btn class="mx-5" color="primary">
+                        Stage pass
+                    </v-btn>
+                    <v-btn class="mx-5" color="primary">
+                        Stage fail
+                    </v-btn>
+                </v-row>
                 <v-card-text>
                     Lorem ipsum dolor sit amet, no nam oblique veritus. Commune scaevola imperdiet nec ut, sed euismod convenire principes at. Est et nobis iisque percipit, an vim zril disputando voluptatibus, vix an salutandi sententiae.
                 </v-card-text>

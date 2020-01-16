@@ -6,7 +6,7 @@ import Axios from 'axios'
 import AsyncComputed from 'vue-async-computed'
 
 Vue.use(AsyncComputed, {
-  default: 'Loading...'
+  default: {context:'Loading...'}
 });
 
 Vue.config.productionTip = false
