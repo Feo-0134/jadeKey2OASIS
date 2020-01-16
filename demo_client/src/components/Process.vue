@@ -116,7 +116,7 @@ export default {
     components: {},
     data: () => ({
         stage_cnt: 0,
-        
+        dialog: false,
         items: [
             {
             color: '#5F6062',

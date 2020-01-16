@@ -102,7 +102,7 @@
                 text
                 color="blue accent-4"
             >
-                Report
+                Show More
             </v-btn>
             <v-spacer></v-spacer>
             <v-btn icon>

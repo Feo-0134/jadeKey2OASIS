@@ -9,9 +9,10 @@
         <v-list-item
           v-for="item in items"
           :key="item.text"
+          @click="route(item.routeName)"
           link
         >
-          <v-list-item-action>
+          <v-list-item-action >
             <v-icon>{{ item.icon }}</v-icon>
           </v-list-item-action>
           <v-list-item-content>
@@ -39,7 +40,7 @@
         <v-list-item
           class="mt-4"
           link
-          @click="route('/newProcess')"
+          @click="route('NewProcess')"
         >
           <v-list-item-action>
             <v-icon color="grey darken-1">mdi-plus-circle-outline</v-icon>
@@ -104,11 +105,11 @@
     data: () => ({
       drawer: null,
       items: [
-        { icon: 'mdi-trending-up', text: 'Most Popular' },
-        { icon: 'mdi-signal-variant', text: 'Subscriptions' },
-        { icon: 'mdi-history', text: 'History' },
-        { icon: 'mdi-format-list-bulleted-square', text: 'Playlists' },
-        { icon: 'mdi-television-play', text: 'Watch Later' },
+        { icon: 'mdi-trending-up', text: 'Most Popular', routeName: 'Dashboard' },
+        { icon: 'mdi-signal-variant', text: 'Subscriptions', routeName: 'Dashboard' },
+        { icon: 'mdi-history', text: 'History', routeName: 'Dashboard' },
+        { icon: 'mdi-format-list-bulleted-square', text: 'DashBoard', routeName: 'Dashboard' },
+        { icon: 'mdi-television-play', text: 'Watch Later', routeName: 'Dashboard' },
       ],
       items2: [
         { picture: 28, text: 'Joseph' },
@@ -123,7 +124,7 @@
     },
     methods: {
       route(path) {
-        this.$router.push(path)
+        this.$router.push({name: path})
       }
     }
   }

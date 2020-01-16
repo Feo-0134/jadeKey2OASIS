@@ -3,7 +3,7 @@ import Router from 'vue-router'
 
 import Dashboard from './components/Dashboard'
 import NewProcess from './components/NewProcess'
-
+import ProcessDetail from './components/ProcessDetail'
 
 Vue.use(Router)
 
@@ -18,8 +18,14 @@ export default new Router({
         },
         {
             path: '/newProcess',
-            name: 'New Process',
+            name: 'NewProcess',
             component: NewProcess
         },
+        {
+            path: '/processDetail/:id',
+            name: 'ProcessDetail',
+            component: ProcessDetail
+        },
+
     ]
 })
