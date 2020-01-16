@@ -1,7 +1,7 @@
 <template>
     <v-container>
         <v-card
-        class="mx-auto"
+        class="mx-2"
         color="#AF7A6D"
         dark
         max-width="400"
@@ -18,6 +18,17 @@
 
             <v-card-text class="headline font-weight-bold">
             {{comment_object}}
+                <v-row
+                        align="center"
+                        justify="end"
+                        >
+                    <v-btn class="ma-5" color="#E57373">
+                        edit
+                    </v-btn>
+                    <v-btn class="ma-5" color="#E57373">
+                        submit
+                    </v-btn>
+                </v-row>
             </v-card-text>
 
             <v-card-actions>
@@ -30,7 +41,7 @@
                 </v-list-item-avatar>
 
                 <v-list-item-content>
-                <v-list-item-title>Evan You</v-list-item-title>
+                <v-list-item-title>Anonymous</v-list-item-title>
                 </v-list-item-content>
 
                 <!-- <v-row
