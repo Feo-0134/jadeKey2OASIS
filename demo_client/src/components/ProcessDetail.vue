@@ -15,82 +15,55 @@
             <v-card class="elevation-2">
                 <v-card-title class="headline">{{n.title}}</v-card-title>
                 <v-row>
-                <v-card
-                    class="mx-10"
-                    tile >
-                    <v-app-bar
-                    dark
-                    color="#E57373"
-                    >
-                    <v-app-bar-nav-icon></v-app-bar-nav-icon>
-
-                    <v-toolbar-title>Stage Context</v-toolbar-title>
-
-                    <v-spacer></v-spacer>
-
-                    <v-btn icon>
-                        <v-icon>mdi-magnify</v-icon>
-                    </v-btn>
-                    </v-app-bar>
-
-                    <v-container>
-                    <v-row dense>
-                        <v-col cols="12">
-                        <v-card
-                            color="#385F73"
-                            dark
+                    <v-card
+                        class="mx-10"
+                        tile >
+                        <v-app-bar
+                        dark
+                        color="#E57373"
                         >
-                            <v-card-title class="headline">Unlimited music now</v-card-title>
+                        <v-app-bar-nav-icon></v-app-bar-nav-icon>
 
-                            <v-card-subtitle>Listen to your favorite artists and albums whenever and wherever, online and offline.</v-card-subtitle>
-                            <v-file-input class="mx-5" multiple label="File input"></v-file-input>
-                            <v-card-actions>
-                            <v-btn text>Submit</v-btn>
-                            </v-card-actions>
-                        </v-card>
-                        </v-col>
+                        <v-toolbar-title>Stage Context</v-toolbar-title>
 
-                        <v-col
-                        v-for="(item, i) in itemt"
-                        :key="i"
-                        cols="12"
-                        >
-                        <v-card
-                            :color="item.color"
-                            dark
-                        >
-                            <div class="d-flex flex-no-wrap justify-space-between">
-                            <div>
-                                <v-card-title
-                                class="headline"
-                                v-text="item.title"
-                                ></v-card-title>
+                        <v-spacer></v-spacer>
 
-                                <v-card-subtitle v-text="item.artist"></v-card-subtitle>
-                            </div>
+                        <v-btn icon>
+                            <v-icon>mdi-magnify</v-icon>
+                        </v-btn>
+                        </v-app-bar>
 
-                            <v-avatar
-                                class="ma-3"
-                                size="125"
-                                tile
-                            >
-                                <v-img :src="item.src"></v-img>
-                            </v-avatar>
-                            </div>
-                        </v-card>
-                        </v-col>
-                    </v-row>
-                    </v-container>
-                </v-card>
-                <v-col>
-                <Comment v-for="m in comment_list" :key="m" :comment_object="m" v-show="m.Stage === n.stage"/>
-                </v-col>
+                        <v-container>
+                        <v-row dense>
+                            <v-col cols="12">
+                                <v-card
+                                    color="#385F73"
+                                    dark
+                                    >
+                                    <v-card-title class="headline">Unlimited music now</v-card-title>
+
+                                    <v-card-subtitle>Listen to your favorite artists and albums whenever and wherever, online and offline.</v-card-subtitle>
+                                    <v-file-input class="mx-5" multiple label="File input"></v-file-input>
+                                    <v-card-actions>
+                                    <v-btn text>Submit</v-btn>
+                                    </v-card-actions>
+                                </v-card>
+                            </v-col>
+                        </v-row>
+                        </v-container>
+                    </v-card>
+                    <v-col col='6' v-for="m in comment_list" 
+                        :key="m" 
+                        v-show="m.Stage === n.stage">
+                    <Comment  
+                        :comment_object="m" />
+                    </v-col>
                 </v-row>
                 <v-row
                         align="center"
                         justify="start"
                         >
-                    <v-btn class="ml-10 mt-5" color="#E57373">
+                    <v-btn class="ml-10 mt-5" color="#E57373" @click="newComment(n.stage)">
                         new comment
                     </v-btn>
                     <v-spacer></v-spacer>
@@ -190,7 +163,33 @@ export default {
         }
     },
     methods: {
-        
+        async newComment(stage) {
+            try {
+                    const that = this
+                    const res = await this.$http.post(
+                        'http://localhost:8000/escBackend/comment/',
+                        {
+                            Stage: stage,
+                            Writer: 1,
+                            Context: 'template context',
+                            Edited: false,
+                            Submited: false
+                        }
+                    );
+                    window.console.log(res.data)
+                    const res1 = await this.$http.post(
+                        'http://localhost:8000/escBackend/process_comment/',
+                        {
+                            Process: that.process_id,
+                            Comment: res.data.id
+                        }
+                    );
+                    // location.reload();
+                    return res1.data
+            }catch(e) {
+                window.console.log(e);
+            }
+        },
     }
 
 }

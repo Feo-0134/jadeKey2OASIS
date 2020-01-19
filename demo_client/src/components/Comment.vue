@@ -18,6 +18,14 @@
 
             <v-card-text class="headline font-weight-bold">
             {{comment_object}}
+            <v-col cols="12" md="10">
+                <v-textarea
+                    outlined
+                    name="input-7-4"
+                    label="Text Area"
+                    v-model="comment_object.Context"
+            ></v-textarea>
+                </v-col>
                 <v-row
                         align="center"
                         justify="end"
@@ -25,7 +33,7 @@
                     <v-btn class="ma-5" color="#E57373">
                         edit
                     </v-btn>
-                    <v-btn class="ma-5" color="#E57373">
+                    <v-btn class="ma-5" color="#E57373" @click="updateComment">
                         submit
                     </v-btn>
                 </v-row>
@@ -66,25 +74,43 @@ export default {
     },
     components: {},
     data: () => ({
-        engineer_id: '1',
     }),
     asyncComputed: {
-        dada: {
-            async get() {
-                try {
-                    const res = await this.$http.get(`http://127.0.0.1:8000/escBackend/comment/${this.comment_id}/`)
-                    return res.data
-                }catch(e) {
-                    window.console.log(e)
-                }
-            }
-        }
+        // dada: {
+        //     async get() {
+        //         try {
+        //             const res = await this.$http.get(`http://127.0.0.1:8000/escBackend/comment/${this.comment_id}/`)
+        //             return res.data
+        //         }catch(e) {
+        //             window.console.log(e)
+        //         }
+        //     }
+        // }
     },
     computed: {
 
     },
     methods: {
+        async updateComment() {
+            try {
+                    const that = this
+                    const res = await this.$http.put(
+                        'http://localhost:8000/escBackend/comment/'+this.comment_object.id + '/',
+                        {
+                            Stage: 1,
+                            Writer: 1,
+                            Context: that.comment_object.Context,
+                            Edited: true,
+                            Submited: false
+                        }
+                    );
+                    // location.reload();
 
+                    return res.data
+            }catch(e) {
+                window.console.log(e);
+            }
+        },
     }
 
 }

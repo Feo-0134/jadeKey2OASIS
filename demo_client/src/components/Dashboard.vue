@@ -12,6 +12,18 @@
                 <Engineer :engineer_info = "n"/>
             </v-col>
         </v-row>
+        <v-subheader class="headline">Reviewer List</v-subheader>
+        <v-divider></v-divider>
+        <v-row
+          justify="center"
+          align="center"
+        >
+        <v-col cols='4'  v-for="(n, i) in reviewer_list"
+          :key="i"
+          >
+          <Engineer :engineer_info = "n"/>
+        </v-col>
+        </v-row>
         <v-subheader class="headline">Process List</v-subheader>
         <v-divider></v-divider>
         <v-row
@@ -36,18 +48,7 @@
           <Comment :comment_object="n"/>
         </v-col>
         </v-row>
-        <v-subheader class="headline">Reviewer List</v-subheader>
-        <v-divider></v-divider>
-        <v-row
-          justify="center"
-          align="center"
-        >
-        <v-col cols='4'  v-for="(n, i) in reviewer_list"
-          :key="i"
-          >
-          <Engineer :engineer_info = "n"/>
-        </v-col>
-        </v-row>
+        
     </v-container>
 </template>
 <script>

@@ -12,6 +12,7 @@ router.register(r'reviewer', views.ReviewerViewSet)
 router.register(r'process', views.ProcessViewSet)
 router.register(r'process_review', views.ProcessReviewViewSet)
 router.register(r'comment', views.CommentViewSet)
+router.register(r'process_comment', views.ProcessCommentsViewSet)
 
 urlpatterns = [
     path('', include(router.urls)),
