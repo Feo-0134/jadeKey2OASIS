@@ -6,6 +6,7 @@
             <v-timeline-item
             v-for="n in items"
             :key="n"
+            v-show="n.stage <= cntStage"
             color="red lighten-2"
             large
             >
@@ -14,7 +15,7 @@
             </template>
             <v-card class="elevation-2">
                 <v-card-title class="headline">{{n.title}}</v-card-title>
-                <v-row>
+                <v-row >
                     <v-card
                         class="mx-10"
                         tile >
@@ -52,12 +53,15 @@
                         </v-row>
                         </v-container>
                     </v-card>
-                    <v-col col='6' v-for="m in comment_list" 
+                <v-col>
+                <v-row>
+                    <v-col v-for="m in comment_list" 
                         :key="m" 
                         v-show="m.Stage === n.stage">
-                    <Comment  
-                        :comment_object="m" />
+                    <Comment :comment_object="m" />
                     </v-col>
+                </v-row>
+                </v-col>
                 </v-row>
                 <v-row
                         align="center"
@@ -67,10 +71,10 @@
                         new comment
                     </v-btn>
                     <v-spacer></v-spacer>
-                    <v-btn class="mr-3" color="primary">
+                    <v-btn class="mr-3" color="primary" @click="enterNewStage('pass')">
                         Stage pass
                     </v-btn>
-                    <v-btn class="mr-10" color="primary">
+                    <v-btn class="mr-10" color="primary" @click="enterNewStage('fail')">
                         Stage fail
                     </v-btn>
                 </v-row>
@@ -88,49 +92,70 @@ export default {
     props: { },
     components: { Comment },
     data: () => ({
-        items: [
-            {   
-            stage: 1,
-            color: '#5F6062',
-            src: 'https://cdn.vuetifyjs.com/images/cards/foster.jpg',
-            title: 'Submit Request',
-            artist: 'Foster the People',
-            },
-            {
-            stage: 2,
-            color: '#8E8989',
-            src: 'https://cdn.vuetifyjs.com/images/cards/halcyon.png',
-            title: 'Checklist Review',
-            artist: 'Ellie Goulding',
-            },
-            {
-            stage: 3,
-            color: '#5F6062',
-            src: 'https://cdn.vuetifyjs.com/images/cards/foster.jpg',
-            title: 'Submit Request',
-            artist: 'Foster the People',
-            },
-            {
-            stage: 4,
-            color: '#8E8989',
-            src: 'https://cdn.vuetifyjs.com/images/cards/halcyon.png',
-            title: 'Checklist Review',
-            artist: 'Ellie Goulding',
-            },
-            {
-            stage: 5,
-            color: '#5F6062',
-            src: 'https://cdn.vuetifyjs.com/images/cards/foster.jpg',
-            title: 'Review Complete',
-            artist: 'Foster the People',
-            },
-        ],
+        cntStage: 0,
+        items: [ ],
     }),
     asyncComputed: {
+        stage_list: {
+            async get() {
+                try {
+                    const res = await this.$http.get(`http://127.0.0.1:8000/escBackend/stage_kind/`)
+                    this.stage_cnt = res.data.length
+                    return res.data
+                }catch(e) {
+                    window.console.log(e)
+                }
+            }
+        },
         process_object: {
             async get() {
                 try {
                     const res = await this.$http.get(`http://127.0.0.1:8000/escBackend/process/${this.process_id}`)
+                    let Stage1TryTimes = res.data.Stage1TryTimes
+                    let Stage2TryTimes = res.data.Stage2TryTimes
+                    let Stage3TryTimes = res.data.Stage3TryTimes
+                    let Stage4TryTimes = res.data.Stage4TryTimes
+
+                    while(Stage1TryTimes && Stage1TryTimes>0) {
+                        this.cntStage++
+                        this.items.push(
+                            {
+                                stage: this.cntStage,
+                                title: this.stage_list[0].FullName
+                            }
+                        )
+                        Stage1TryTimes--
+                    }
+                    while(Stage2TryTimes && Stage2TryTimes>0) {
+                        this.cntStage++
+                        this.items.push(
+                            {
+                                stage: this.cntStage,
+                                title: this.stage_list[1].FullName
+                            }
+                        )
+                        Stage2TryTimes--
+                    }
+                    while(Stage3TryTimes && Stage3TryTimes>0) {
+                        this.cntStage++
+                        this.items.push(
+                            {
+                                stage: this.cntStage,
+                                title: this.stage_list[2].FullName
+                            }
+                        )
+                        Stage3TryTimes--
+                    }
+                    while(Stage4TryTimes && Stage4TryTimes>0) {
+                        this.cntStage++
+                        this.items.push(
+                            {
+                                stage: this.cntStage,
+                                title: this.stage_list[3].FullName
+                            }
+                        )
+                        Stage4TryTimes--
+                    }
                     return res.data
                 }catch(e) {
                     window.console.log(e)
@@ -142,18 +167,18 @@ export default {
                 try {
                     let that = this
                     let commentArray = []
-                    window.console.log(this.process_object.ProcessComments)
+                    // window.console.log(this.process_object.ProcessComments)
                     for (let n=0;n<this.process_object.ProcessComments.length;n++) {
                         const res = await this.$http.get(`http://127.0.0.1:8000/escBackend/comment/${that.process_object.ProcessComments[n]}`)
                         commentArray.push(res.data)
                     }
-                    window.console.log(commentArray)
+                    // window.console.log(commentArray)
                     return commentArray
                 }catch(e) {
                     window.console.log(e)
                 }
             }
-        }
+        },
     },
     computed: {
         process_id: function() {
@@ -161,6 +186,9 @@ export default {
             // window.console.log(current_id)
             return current_id
         }
+    },
+    beforeMount() {
+        
     },
     methods: {
         async newComment(stage) {
@@ -184,8 +212,51 @@ export default {
                             Comment: res.data.id
                         }
                     );
-                    // location.reload();
+                    location.reload();
                     return res1.data
+            }catch(e) {
+                window.console.log(e);
+            }
+        },
+        async enterNewStage(status) {
+            try {   
+                    this.cntStage++
+                    
+                    if(status == 'pass') {
+                        this.process_object.ProcessCurrentStage += 1
+                        if (this.process_object.Stage2TryTimes === -1) this.process_object.Stage2TryTimes = 1
+                        else if (this.process_object.Stage3TryTimes === -1) this.process_object.Stage3TryTimes = 1
+                        else if (this.process_object.Stage4TryTimes === -1) this.process_object.Stage4TryTimes = 1
+                    }else if(status == 'fail') {
+                        if (this.process_object.Stage2TryTimes === -1) this.process_object.Stage1TryTimes += 1
+                        else if (this.process_object.Stage3TryTimes === -1) this.process_object.Stage2TryTimes += 1
+                        else if (this.process_object.Stage4TryTimes === -1) this.process_object.Stage3TryTimes += 1
+                        else this.process_object.Stage4TryTimes += 1
+                    }
+                    this.items.push(
+                        {
+                            stage: this.cntStage,
+                            title: this.stage_list[this.process_object.ProcessCurrentStage-1].FullName
+                        }
+                    )   
+                    const that = this
+                    const res = await this.$http.put(
+                        'http://localhost:8000/escBackend/process/' + that.process_object.id + '/',
+                        {
+                            Kind: that.process_object.Kind,
+                            ProcessOwner: that.process_object.ProcessOwner,
+                            ProcessReviewer: that.process_object.ProcessReviewer,
+                            ProcessComments: that.process_object.ProcessComments,
+                            ProcessCurrentStage: that.process_object.ProcessCurrentStage,
+                            Stage1TryTimes: that.process_object.Stage1TryTimes,
+                            Stage2TryTimes: that.process_object.Stage2TryTimes,
+                            Stage3TryTimes: that.process_object.Stage3TryTimes,
+                            Stage4TryTimes: that.process_object.Stage4TryTimes
+                        }
+                    );
+                    window.console.log(res.data)
+                    // location.reload();
+                    return res.data
             }catch(e) {
                 window.console.log(e);
             }
