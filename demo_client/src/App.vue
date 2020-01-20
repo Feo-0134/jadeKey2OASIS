@@ -24,21 +24,26 @@
         <v-subheader class="mt-4 grey--text text--darken-1">REVIEWERS</v-subheader>
         <v-list>
           <v-list-item
-            v-for="(item, i) in items2"
+            v-for="(item, i) in reviewer_list"
             :key="i"
             link
           >
             <v-list-item-avatar>
               <img
-                :src="`https://randomuser.me/api/portraits/men/${item.picture}.jpg`"
+                :src="`https://randomuser.me/api/portraits/men/33.jpg`"
                 alt=""
               >
             </v-list-item-avatar>
-            <v-list-item-title v-text="item.text" />
+            <v-list-item-title v-text="item.Name" />
           </v-list-item>
         </v-list>
+        <v-list-item class="mt-4" link v-show="$store.state.username">
+          <v-list-item-action>
+            <v-icon color="grey darken-1">mdi-account-outline</v-icon>
+          </v-list-item-action>
+          <v-list-item-title class="grey--text text--darken-1">Welcome, {{currentUser}}</v-list-item-title>
+        </v-list-item>
         <v-list-item
-          class="mt-4"
           link
           @click="route('NewProcess')"
         >
@@ -47,12 +52,13 @@
           </v-list-item-action>
           <v-list-item-title class="grey--text text--darken-1">New Process</v-list-item-title>
         </v-list-item>
-        <v-list-item link>
+        <v-list-item link href="http://localhost:8000/escBackend/">
           <v-list-item-action>
             <v-icon color="grey darken-1">mdi-settings</v-icon>
           </v-list-item-action>
           <v-list-item-title class="grey--text text--darken-1">Management</v-list-item-title>
         </v-list-item>
+        
       </v-list>
     </v-navigation-drawer>
 
@@ -105,11 +111,11 @@
     data: () => ({
       drawer: null,
       items: [
-        { icon: 'mdi-trending-up', text: 'Most Popular', routeName: 'Dashboard' },
-        { icon: 'mdi-signal-variant', text: 'Subscriptions', routeName: 'Dashboard' },
-        { icon: 'mdi-history', text: 'History', routeName: 'Dashboard' },
         { icon: 'mdi-format-list-bulleted-square', text: 'DashBoard', routeName: 'Dashboard' },
-        { icon: 'mdi-television-play', text: 'Watch Later', routeName: 'Dashboard' },
+        // { icon: 'mdi-signal-variant', text: 'Subscriptions', routeName: 'Dashboard' },
+        { icon: 'mdi-email', text: 'E-mail', routeName: 'Dashboard' },
+        { icon: 'mdi-account-multiple-outline', text: 'Create Meeting', routeName: 'Dashboard' },
+        { icon: 'mdi-history', text: 'Previous Comments', routeName: 'PreviousComments' },
       ],
       items2: [
         { picture: 28, text: 'Joseph' },
@@ -122,9 +128,27 @@
     created () {
       this.$vuetify.theme.dark = true
     },
+    asyncComputed: {
+      reviewer_list: {
+          async get() {
+              try {
+                  const res = await this.$http.get(`http://127.0.0.1:8000/escBackend/reviewer/`)
+                  this.reviewer_cnt = res.data.length
+                  return res.data
+              }catch(e) {
+                  window.console.log(e)
+              }
+          }
+      }
+    },
     methods: {
       route(path) {
         this.$router.push({name: path})
+      }
+    },
+    computed: {
+      currentUser() {
+        return this.$store.state.username
       }
     }
   }

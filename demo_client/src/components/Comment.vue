@@ -30,10 +30,10 @@
                         align="center"
                         justify="end"
                         >
-                    <v-btn class="ma-5" color="#E57373">
-                        edit
-                    </v-btn>
                     <v-btn class="ma-5" color="#E57373" @click="updateComment">
+                        save
+                    </v-btn>
+                    <v-btn class="ma-5" color="#E57373" @click="submitComment">
                         submit
                     </v-btn>
                 </v-row>
@@ -102,6 +102,26 @@ export default {
                             Context: that.comment_object.Context,
                             Edited: true,
                             Submited: false
+                        }
+                    );
+                    // location.reload();
+
+                    return res.data
+            }catch(e) {
+                window.console.log(e);
+            }
+        },
+        async submitComment() {
+            try {
+                    const that = this
+                    const res = await this.$http.put(
+                        'http://localhost:8000/escBackend/comment/'+this.comment_object.id + '/',
+                        {
+                            Stage: 1,
+                            Writer: 1,
+                            Context: that.comment_object.Context,
+                            Edited: true,
+                            Submited: true
                         }
                     );
                     // location.reload();

@@ -13,6 +13,7 @@ const store = new Vuex.Store({
     role: 'engineer',
     username: '',
     password: '',
+    id: 1,
   },
   mutations: {
     setAccount (state, userAccount) {

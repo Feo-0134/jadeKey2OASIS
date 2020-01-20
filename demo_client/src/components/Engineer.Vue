@@ -95,12 +95,6 @@
             <v-btn
                 text
                 color="blue accent-4"
-            >
-                Bookmark
-            </v-btn>
-            <v-btn
-                text
-                color="blue accent-4"
                 @click="showProcessDetail"
             >
                 Show More
