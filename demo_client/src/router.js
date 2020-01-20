@@ -4,6 +4,7 @@ import Router from 'vue-router'
 import Dashboard from './components/Dashboard'
 import NewProcess from './components/NewProcess'
 import ProcessDetail from './components/ProcessDetail'
+import Login from './components/Login'
 
 Vue.use(Router)
 
@@ -13,6 +14,11 @@ export default new Router({
     routes: [
         {
             path: '/',
+            name: 'Login',
+            component: Login
+        },
+        {
+            path: '/dashboard',
             name: 'Dashboard',
             component: Dashboard
         },
