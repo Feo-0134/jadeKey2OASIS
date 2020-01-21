@@ -5,6 +5,7 @@ import Dashboard from './components/Dashboard'
 import NewProcess from './components/NewProcess'
 import ProcessDetail from './components/ProcessDetail'
 import Login from './components/Login'
+import AccessCell from './components/AccessCell'
 import PreviousComments from './components/PreviousComments'
 
 Vue.use(Router)
@@ -14,9 +15,14 @@ export default new Router({
     base: process.env.BASE_URL,
     routes: [
         {
-            path: '/',
+            path: '/login',
             name: 'Login',
             component: Login
+        },
+        {
+            path: '/',
+            name: 'AccessCell',
+            component: AccessCell
         },
         {
             path: '/previousComments',

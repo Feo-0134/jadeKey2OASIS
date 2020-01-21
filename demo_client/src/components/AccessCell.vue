@@ -5,6 +5,7 @@
 </template>
 
 <script>
+var Msal = require('msal');
 export default {
     name: 'AccessCell',
     data() {
