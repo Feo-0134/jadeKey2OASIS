@@ -3,7 +3,7 @@
         <v-card>
             <v-app-bar dark color="red">
 
-            <v-toolbar-title>{{process_title}}</v-toolbar-title>
+            <v-toolbar-title>{{process_Owner.Name}} - {{process_title}}</v-toolbar-title>
 
             <v-spacer></v-spacer>
 
@@ -188,6 +188,17 @@ export default {
                     window.console.log(e)
                 }
             }
+        },
+        process_Owner: {
+            async get() {
+                try {
+                    const that = this
+                    const res = await this.$http.get(`http://127.0.0.1:8000/escBackend/engineer/${that.process_object.ProcessOwner}`)
+                    return res.data
+                }catch(e) {
+                    window.console.log(e)
+                }
+            }
         }
     },
     computed: {
@@ -214,7 +225,7 @@ export default {
                             Reviewer: that.reviewer_list[that.model].id
                         },
                     );
-                    location.reload();
+                    // location.reload();
                     // window.console.log(res.data)
                     this.dialog = false
                     return res.data

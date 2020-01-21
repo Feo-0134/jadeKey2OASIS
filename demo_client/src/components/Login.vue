@@ -52,6 +52,12 @@ export default {
     methods: {
       login2Dsh() {
         this.$store.commit('setAccount', this.userAccount)
+        if(this.userAccount.username==='Test Reviewer' || this.userAccount.username==='Test Reviewer2') {
+          this.$store.commit('switch2Reviewer')
+        }
+        if(this.userAccount.username==='Test Reviewer2') {
+          this.$store.commit('switchID')
+        }
         setTimeout(() => {
           this.$router.push(`/dashboard`)
         }, 3000);

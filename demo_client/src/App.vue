@@ -58,6 +58,18 @@
           </v-list-item-action>
           <v-list-item-title class="grey--text text--darken-1">Management</v-list-item-title>
         </v-list-item>
+        <v-list-item link @click="$store.commit('switch2Admin')">
+          <v-list-item-action>
+            <v-icon color="grey darken-1">mdi-cctv</v-icon>
+          </v-list-item-action>
+          <v-list-item-title class="grey--text text--darken-1">Admin View</v-list-item-title>
+        </v-list-item>
+        <v-list-item link href="http://localhost:8080/" v-show="$store.state.username">
+          <v-list-item-action>
+            <v-icon color="grey darken-1">mdi-logout</v-icon>
+          </v-list-item-action>
+          <v-list-item-title class="grey--text text--darken-1">Log Out</v-list-item-title>
+        </v-list-item>
         
       </v-list>
     </v-navigation-drawer>

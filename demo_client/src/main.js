@@ -26,6 +26,12 @@ const store = new Vuex.Store({
     switch2Engineer (state) {
       state.role = 'engineer'
     },
+    switch2Admin (state) {
+      state.role = 'admin'
+    },
+    switchID(state) {
+      state.id = 2
+    }
   }
 })
 

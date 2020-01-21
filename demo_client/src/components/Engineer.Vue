@@ -10,8 +10,8 @@
                 <v-list-item-subtitle >({{ alias }})</v-list-item-subtitle>
 
             </v-list-item-content>
-            <v-btn @click="detailShow = !detailShow" color="#5F6062">
-            <v-icon>mdi-unfold-more-horizontal</v-icon>
+            <v-btn @click="detailShow = !detailShow" text>
+            <v-icon>mdi-chevron-down</v-icon>
             </v-btn>
             </v-list-item>
             <v-stepper v-show='detailShow' v-model="e1">

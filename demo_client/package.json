@@ -10,6 +10,7 @@
   "dependencies": {
     "axios": "^0.19.1",
     "core-js": "^3.6.3",
+    "msal": "^1.2.1",
     "vue": "^2.6.10",
     "vue-async-computed": "^3.8.2",
     "vue-router": "^3.1.3",

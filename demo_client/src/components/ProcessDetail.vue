@@ -55,9 +55,9 @@
                     </v-card>
                 <v-col>
                 <v-row>
-                    <v-col v-for="m in comment_list" 
+                    <v-col v-for="m in comment_list" v-show="m.Stage === n.stage"
                         :key="m" 
-                        v-show="m.Stage === n.stage">
+                        >
                     <Comment :comment_object="m" />
                     </v-col>
                 </v-row>
@@ -67,14 +67,14 @@
                         align="center"
                         justify="start"
                         >
-                    <v-btn class="ml-10 mt-5" color="#E57373" @click="newComment(n.stage)">
+                    <v-btn class="ml-10 mt-5" v-show="$store.state.role === 'reviewer'" color="#E57373" @click="newComment(n.stage)">
                         new comment
                     </v-btn>
                     <v-spacer></v-spacer>
-                    <v-btn class="mr-3" color="primary" @click="enterNewStage('pass')">
+                    <v-btn class="mr-3" v-show="$store.state.role === 'admin'" color="primary" @click="enterNewStage('pass')">
                         Stage pass
                     </v-btn>
-                    <v-btn class="mr-10" color="primary" @click="enterNewStage('fail')">
+                    <v-btn class="mr-10" v-show="$store.state.role === 'admin'" color="primary" @click="enterNewStage('fail')">
                         Stage fail
                     </v-btn>
                 </v-row>
@@ -198,7 +198,7 @@ export default {
                         'http://localhost:8000/escBackend/comment/',
                         {
                             Stage: stage,
-                            Writer: 1,
+                            Writer: that.$store.state.id,
                             Context: 'template context',
                             Edited: false,
                             Submited: false
@@ -212,7 +212,7 @@ export default {
                             Comment: res.data.id
                         }
                     );
-                    location.reload();
+                    // location.reload();
                     return res1.data
             }catch(e) {
                 window.console.log(e);

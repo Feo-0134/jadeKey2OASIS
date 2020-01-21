@@ -20,6 +20,7 @@
             {{comment_object}}
             <v-col cols="12" md="10">
                 <v-textarea
+                    v-show="$store.state.role === 'reviewer' && $store.state.id === comment_object.Writer"
                     outlined
                     name="input-7-4"
                     label="Text Area"
@@ -27,9 +28,10 @@
             ></v-textarea>
                 </v-col>
                 <v-row
-                        align="center"
-                        justify="end"
-                        >
+                    v-show="$store.state.role === 'reviewer' && $store.state.id === comment_object.Writer"    
+                    align="center"
+                    justify="end"
+                    >
                     <v-btn class="ma-5" color="#E57373" @click="updateComment">
                         save
                     </v-btn>
@@ -88,7 +90,6 @@ export default {
         // }
     },
     computed: {
-
     },
     methods: {
         async updateComment() {
