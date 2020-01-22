@@ -21,13 +21,18 @@ const store = new Vuex.Store({
       state.password = userAccount.password
     },
     switch2Reviewer (state) {
-      state.role = 'reviewer'
-    },
-    switch2Engineer (state) {
-      state.role = 'engineer'
+      if (state.role === 'reviewer') {
+        state.role = 'engineer'
+      } else {
+        state.role = 'reviewer'
+      }
     },
     switch2Admin (state) {
-      state.role = 'admin'
+      if (state.role === 'admin') {
+        state.role = 'engineer'
+      } else {
+        state.role = 'admin'
+      }
     },
     switchID(state) {
       state.id = 2

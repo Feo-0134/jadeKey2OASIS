@@ -43,16 +43,7 @@
           </v-list-item-action>
           <v-list-item-title class="grey--text text--darken-1">Welcome, {{currentUser}}</v-list-item-title>
         </v-list-item>
-        <v-list-item
-          link
-          @click="route('NewProcess')"
-        >
-          <v-list-item-action>
-            <v-icon color="grey darken-1">mdi-plus-circle-outline</v-icon>
-          </v-list-item-action>
-          <v-list-item-title class="grey--text text--darken-1">New Process</v-list-item-title>
-        </v-list-item>
-        <v-list-item link href="http://localhost:8000/escBackend/">
+        <v-list-item link href="">
           <v-list-item-action>
             <v-icon color="grey darken-1">mdi-settings</v-icon>
           </v-list-item-action>
@@ -63,6 +54,12 @@
             <v-icon color="grey darken-1">mdi-cctv</v-icon>
           </v-list-item-action>
           <v-list-item-title class="grey--text text--darken-1">Admin View</v-list-item-title>
+        </v-list-item>
+        <v-list-item link >
+          <v-list-item-action @click="$store.commit('switch2Reviewer')">
+            <v-switch v-model="reviewer" label="" ></v-switch>
+          </v-list-item-action>
+          <v-list-item-title class="grey--text text--darken-1">Reviewer View</v-list-item-title>
         </v-list-item>
         <v-list-item link href="http://localhost:8080/" v-show="$store.state.username">
           <v-list-item-action>
@@ -122,6 +119,7 @@
     },
     data: () => ({
       drawer: null,
+      reviewer: false,
       items: [
         { icon: 'mdi-format-list-bulleted-square', text: 'DashBoard', routeName: 'Dashboard' },
         // { icon: 'mdi-signal-variant', text: 'Subscriptions', routeName: 'Dashboard' },
