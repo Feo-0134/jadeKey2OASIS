@@ -78,19 +78,21 @@
                         show-arrows-on-hover
                     >
                         <v-carousel-item
-                        v-for="(slide, i) in slides"
+                        v-for="(comment, i) in comment_list"
+                        v-show="comment.Stage == currentStage"
                         :key="i"
                         >
                         <v-sheet
                             :color="colors[i]"
                             height="100%"
+                            
                         >
                             <v-row
                             class="fill-height"
                             align="center"
                             justify="center"
                             >
-                            <div class="display-3">{{ slide }} Slide</div>
+                            <div class="display-1">{{ comment.Context }}</div>
                             </v-row>
                         </v-sheet>
                         </v-carousel-item>
@@ -120,8 +122,9 @@
                             show-arrows-on-hover
                         >
                             <v-carousel-item
-                            v-for="(slide, i) in slides"
+                            v-for="(comment, i) in comment_list"
                             :key="i"
+                            v-show="comment.Stage == currentStage"
                             >
                             <v-sheet
                                 :color="colors[i]"
@@ -132,7 +135,7 @@
                                 align="center"
                                 justify="center"
                                 >
-                                <div class="display-1">{{ slide }} Slide</div>
+                                <div class="display-1">{{ comment.Context }}</div>
                                 </v-row>
                             </v-sheet>
                             </v-carousel-item>
@@ -197,41 +200,12 @@ export default {
         engineer_title: null,
         process_kind: null,
         stage_kind: null,
-        items: [
-                {
-                text: 'Submit Request',
-                disabled: true,
-                },
-                {
-                text: 'Checklist Review',
-                disabled: true,
-                },
-                {
-                text: 'Materials Incubation',
-                disabled: true,
-                },
-                {
-                text: 'Review Meeting',
-                disabled: true,
-                },
-                {
-                text: 'Review Complete',
-                disabled: true,
-                },
-            ],
         colors: [
           'indigo',
           'warning',
           'pink darken-2',
           'red lighten-1',
           'deep-purple accent-4',
-        ],
-        slides: [
-          'First',
-          'Second',
-          'Third',
-          'Fourth',
-          'Fifth',
         ],
         detailShow: false,
     }),
@@ -262,8 +236,8 @@ export default {
             async get() {
                 try {
                     const res = await this.$http.get(`http://localhost:8000/escBackend/stage_kind/`)
-                    this.currentStage = this.engineer_info.EngineerLatestProcess
-                    this.maxCurrentStage = this.engineer_info.EngineerLatestProcess
+                    this.currentStage = this.engineer_info.EngineerLatestStage
+                    this.maxCurrentStage = this.engineer_info.EngineerLatestStage
                     this.stage_kind = res.data[this.engineer_info.EngineerLatestStage - 1].FullName
                     return res.data
                 }catch(e) {
@@ -272,6 +246,34 @@ export default {
             },
             watch: ['engineer_info']
         },
+        process_object: {
+            async get() {
+                try {
+                    const path = 'http://localhost:8000/escBackend/process/' + this.engineer_info.EngineerLatestProcess + '/'
+                    const res = await this.$http.get(path)
+                    return res.data
+                }catch(e) {
+                    window.console.log(e)
+                }
+            }
+        },
+        comment_list: {
+            async get(){
+                try {
+                    let that = this
+                    let commentArray = []
+                    // window.console.log(this.process_object.ProcessComments)
+                    for (let n=0;n<this.process_object.ProcessComments.length;n++) {
+                        const res = await this.$http.get(`http://127.0.0.1:8000/escBackend/comment/${that.process_object.ProcessComments[n]}`)
+                        commentArray.push(res.data)
+                    }
+                    // window.console.log(commentArray)
+                    return commentArray
+                }catch(e) {
+                    window.console.log(e)
+                }
+            }
+        },        
     },
     computed: {
         fullName: function() {
