@@ -23,8 +23,6 @@
                         dark
                         color="#E57373"
                         >
-                        <v-app-bar-nav-icon></v-app-bar-nav-icon>
-
                         <v-toolbar-title>Stage Context</v-toolbar-title>
 
                         <v-spacer></v-spacer>
@@ -55,7 +53,7 @@
                     </v-card>
                 <v-col>
                 <v-row>
-                    <v-col v-for="m in comment_list" v-show="m.Stage === n.stage"
+                    <v-col v-for="m in comment_list" v-show="m.Stage === n.stage && n.stage != 1 && (n.stage < process_object.ProcessCurrentStage || m.Writer == $store.state.id)"
                         :key="m" 
                         >
                     <Comment :comment_object="m" />
@@ -67,7 +65,7 @@
                         align="center"
                         justify="start"
                         >
-                    <v-btn class="ml-10 mt-5" v-show="$store.state.role === 'reviewer'" color="#E57373" @click="newComment(n.stage)">
+                    <v-btn class="ml-10 mt-5" v-show="$store.state.role === 'reviewer' && n.stage != 1" color="#E57373" @click="newComment(n.stage)">
                         new comment
                     </v-btn>
                     <v-spacer></v-spacer>
