@@ -13,7 +13,7 @@
             </v-list-item-avatar>
             </v-list-item>
             <v-card-text>
-            <!-- {{ engineer_info }}<br> -->
+            {{ engineer_info }}<br>
             
             {{ engineer_title }}
             </v-card-text>
@@ -31,15 +31,15 @@
                 text
                 @click="showProcessDetail"
                 class="ml-2"
-                v-if="process_kind"
+                v-if="process_kind && stage_kind"
             >
                 EDIT
                 <v-icon class="ml-2">mdi-lead-pencil</v-icon>
             </v-btn>
             <v-btn
-                v-if="!process_kind"
+                v-if="!(process_kind && stage_kind)"
                 text
-                @click="showProcessDetail"
+                @click="newProcess"
                 class="ml-1"
             >
                 START
@@ -264,12 +264,13 @@ export default {
                     const res = await this.$http.get(`http://localhost:8000/escBackend/stage_kind/`)
                     this.currentStage = this.engineer_info.EngineerLatestProcess
                     this.maxCurrentStage = this.engineer_info.EngineerLatestProcess
-                    this.stage_kind = res.data[this.engineer_info.EngineerLatestProcess - 1].FullName
+                    this.stage_kind = res.data[this.engineer_info.EngineerLatestStage - 1].FullName
                     return res.data
                 }catch(e) {
                     window.console.log(e)
                 }
-            }
+            },
+            watch: ['engineer_info']
         },
     },
     computed: {
@@ -301,9 +302,47 @@ export default {
         },
         processGoOn() {
             if (this.maxCurrentStage > this.currentStage) {
-                this.currentStage+=1
+                this.currentStage += 1
             }
             else this.currentStage = 1
+        },
+        async newProcess() {
+            try {
+                    const that = this
+                    const res = await this.$http.post(
+                    'http://localhost:8000/escBackend/process/',
+                        {
+                            Kind: that.engineer_info.Title,
+                            ProcessOwner: that.engineer_info.id,
+                            ProcessCurrentStage: 1,
+                            Stage1TryTimes: 1,
+                            Stage2TryTimes: -1,
+                            Stage3TryTimes: -1,
+                            Stage4TryTimes: -1
+                        },
+                    );
+                    window.console.log(res.data)
+                    const path = 'http://localhost:8000/escBackend/engineer/' + that.engineer_info.id + '/'
+                    const processID = res.data.id
+                    const res1 = await this.$http.put( path,
+                        {
+                            "Alias": that.engineer_info.Alias,
+                            "Name": that.engineer_info.Name,
+                            "Title": that.engineer_info.Title,
+                            "EngineerLatestProcess": processID,
+                            "EngineerLatestStage": 1,
+                            "IsReviewer": that.engineer_info.IsReviewer
+                        }
+                    );
+                    // location.reload();
+                    const newPath = '/processDetail/' + res.data.id
+                    setTimeout(() => {
+                        this.$router.push(newPath)
+                    }, 2000);
+                    return res1.data
+            }catch(e) {
+                window.console.log(e);
+            }
         }
     }
 
