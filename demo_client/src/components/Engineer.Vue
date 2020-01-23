@@ -37,7 +37,7 @@
                 <v-icon class="ml-2">mdi-lead-pencil</v-icon>
             </v-btn>
             <v-btn
-                v-if="!(process_kind && stage_kind)"
+                v-if="(!(process_kind && stage_kind) )&&engineer_info.id === $store.state.id"
                 text
                 @click="newProcess"
                 class="ml-1"

@@ -53,7 +53,7 @@
                     </v-card>
                 <v-col>
                 <v-row>
-                    <v-col v-for="m in comment_list" v-show="m.Stage === n.stage && n.stage != 1 && (n.stage < process_object.ProcessCurrentStage || m.Writer == $store.state.id)"
+                    <v-col v-for="m in comment_list" v-show="m.Stage === n.stage && n.stage != 1 && (n.stage < cntStage || m.Writer == $store.state.id)"
                         :key="m" 
                         >
                     <Comment :comment_object="m" />
@@ -65,8 +65,8 @@
                         align="center"
                         justify="start"
                         >
-                    <v-btn class="ml-10 mt-5" v-show="$store.state.role === 'reviewer' && n.stage != 1" color="#E57373" @click="newComment(n.stage)">
-                        new comment
+                    <v-btn class="ml-10 mt-5" v-show="$store.state.role === 'reviewer' && n.stage != 1 && n.stage === cntStage && !madeComment" color="#E57373" @click="newComment(n.stage)">
+                        New comment
                     </v-btn>
                     <v-spacer></v-spacer>
                     <v-btn class="mr-3" v-show="$store.state.role === 'admin'" color="primary" @click="enterNewStage('pass')">
@@ -92,6 +92,8 @@ export default {
     data: () => ({
         cntStage: 0,
         items: [ ],
+        currentStage: 0,
+        madeComment: false,
     }),
     asyncComputed: {
         stage_list: {
@@ -109,6 +111,7 @@ export default {
             async get() {
                 try {
                     const res = await this.$http.get(`http://127.0.0.1:8000/escBackend/process/${this.process_id}`)
+                    this.currentStage = res.data.ProcessCurrentStage
                     let Stage1TryTimes = res.data.Stage1TryTimes
                     let Stage2TryTimes = res.data.Stage2TryTimes
                     let Stage3TryTimes = res.data.Stage3TryTimes
@@ -163,14 +166,19 @@ export default {
         comment_list: {
             async get(){
                 try {
-                    let that = this
+                    const that = this
+                    let flag = false
                     let commentArray = []
                     // window.console.log(this.process_object.ProcessComments)
                     for (let n=0;n<this.process_object.ProcessComments.length;n++) {
                         const res = await this.$http.get(`http://127.0.0.1:8000/escBackend/comment/${that.process_object.ProcessComments[n]}`)
+                        if (res.data.Writer == that.$store.state.id) {
+                            flag = true
+                        }
                         commentArray.push(res.data)
                     }
                     // window.console.log(commentArray)
+                    this.madeComment = flag
                     return commentArray
                 }catch(e) {
                     window.console.log(e)
@@ -179,6 +187,7 @@ export default {
         },
     },
     computed: {
+        
         process_id: function() {
             let current_id = this.$router.currentRoute.path.split("/")[2]
             // window.console.log(current_id)

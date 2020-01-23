@@ -20,7 +20,7 @@
             {{comment_object}}
             <v-col cols="12" md="10">
                 <v-textarea
-                    v-show="$store.state.role === 'reviewer' && $store.state.id === comment_object.Writer"
+                    v-show="$store.state.role === 'reviewer' && $store.state.id === comment_object.Writer && !comment_object.Submited"
                     outlined
                     name="input-7-4"
                     label="Text Area"
@@ -28,7 +28,7 @@
             ></v-textarea>
                 </v-col>
                 <v-row
-                    v-show="$store.state.role === 'reviewer' && $store.state.id === comment_object.Writer"    
+                    v-show="$store.state.role === 'reviewer' && $store.state.id === comment_object.Writer && !comment_object.Submited"    
                     align="center"
                     justify="end"
                     >
